@@ -78,24 +78,54 @@ const Navbar = () => {
       >
         <div className="p-6 flex flex-col h-full">
           <div className="flex items-center justify-between mb-6 border-b pb-4">
-            <div>
-              <h2 className="text-lg font-semibold text-gray-800">{user?.firstName}</h2>
-              <p className="text-sm text-gray-500">{user?.email}</p>
-            </div>
-            <img
-              src={user?.profilePic || "/default-profile.png"}
-              alt="Profile"
-              className="w-12 h-12 rounded-full object-cover border border-gray-300"
-            />
+            {user ? (
+              <>
+                <div>
+                  <h2 className="text-lg font-semibold text-gray-800">{user.firstName}</h2>
+                  <p className="text-sm text-gray-500">{user.email}</p>
+                </div>
+                <img
+                  src={user.profilePic || "/default-profile.png"}
+                  alt="Profile"
+                  className="w-12 h-12 rounded-full object-cover border border-gray-300"
+                />
+              </>
+            ) : (
+              <div className="text-center w-full">
+                <img
+                  src="/default-profile.png"
+                  alt="Default"
+                  className="w-12 h-12 mx-auto mb-2 rounded-full object-cover border border-gray-300"
+                />
+                <p className="text-gray-500">Guest User</p>
+              </div>
+            )}
           </div>
 
           {/* Menu Items */}
           <ul className="space-y-4 flex-1">
-            <li>
-              <Link to="/profile" className="flex items-center gap-2 px-4 py-2 text-gray-800 rounded-md hover:bg-gray-300 transition">
-                <CgProfile /> Profile
-              </Link>
-            </li>
+            {user ? (
+              <>
+                <li>
+                  <Link to="/profile" className="flex items-center gap-2 px-4 py-2 text-gray-800 rounded-md hover:bg-gray-300 transition">
+                    <CgProfile /> Profile
+                  </Link>
+                </li>
+              </>
+            ) : (
+              <>
+                <li>
+                  <Link to="/login" className="flex items-center gap-2 px-4 py-2 text-gray-800 rounded-md hover:bg-gray-300 transition">
+                    <CgProfile /> Login
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/register" className="flex items-center gap-2 px-4 py-2 text-gray-800 rounded-md hover:bg-gray-300 transition">
+                    <CgProfile /> Register
+                  </Link>
+                </li>
+              </>
+            )}
             <li>
               <Link to="/settings" className="flex items-center gap-2 px-4 py-2 text-gray-800 rounded-md hover:bg-gray-300 transition">
                 <IoSettings /> Settings
@@ -103,16 +133,19 @@ const Navbar = () => {
             </li>
           </ul>
 
-          {/* Sign Out */}
-          <div>
-            <button
-              onClick={handleSignOut}
-              className="flex items-center gap-2 text-red-600 hover:underline"
-            >
-              <FaSignOutAlt /> Sign Out
-            </button>
-          </div>
+          {/* Sign Out for logged-in users only */}
+          {user && (
+            <div>
+              <button
+                onClick={handleSignOut}
+                className="flex items-center gap-2 text-red-600 hover:underline"
+              >
+                <FaSignOutAlt /> Sign Out
+              </button>
+            </div>
+          )}
         </div>
+
       </div>
 
       {/* Overlay */}

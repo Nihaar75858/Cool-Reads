@@ -2,16 +2,16 @@ const NavigationConfig = {
     0: [ // Guest / not logged in
         { name: "Home", to: "/", submenus: null },
         { name: "About", to: "/about", submenus: null },
-        { name: "Login", to: "/login", submenus: null },
-        { name: "Register", to: "/register", submenus: null }
+        { name: "Blogs", to: "/publicblogs", submenus: null },
+        { name: "Books", to: "/publicbooks", submenus: null },
     ],
     1: [
-        { name: "Home", to: "/admindashboard", submenus: null },
+        { name: "Home", to: "/admin/admindashboard", submenus: null },
         {
             name: "Publications", submenus: [
                 { name: "View Publications", to: "/admin/viewpublications" },
-                { name: "Review Publications", to: "/addpublications" },
-                { name: "Modify Publications", to: "/modifybook" },
+                { name: "Review Publications", to: "/admin/addpublications" },
+                { name: "Modify Publications", to: "/admin/modifybook" },
             ]
         },
         {
@@ -20,7 +20,7 @@ const NavigationConfig = {
                 { name: "View Blogs", to: "/viewblogs" },
             ]
         },
-        { name: "Notifications", to: "/notifications", submenus: null },
+        { name: "Notifications", to: "/admin/notifications", submenus: null },
     ],
     2: [
         { name: "Home", to: "/authordashboard", submenus: null },
@@ -33,9 +33,9 @@ const NavigationConfig = {
         },
     ],
     3: [
-        { name: "Home", to: "/viewerdashboard", submenus: null },
-        { name: "Books", to: "/viewbooks", submenus: null },
-        { name: "Notifications", to: "/notifications", submenus: null },
+        { name: "Home", to: "/viewer/viewerdashboard", submenus: null },
+        { name: "Books", to: "/viewer/viewbooks", submenus: null },
+        { name: "Notifications", to: "/viewer/notifications", submenus: null },
         {
             name: "Blogs", submenus: [
                 { name: "Create Blog", to: "/createblog" },

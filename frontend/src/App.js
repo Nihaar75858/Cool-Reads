@@ -7,6 +7,7 @@ import Register from './pages/Auth/Register';
 import Navbar from './components/Navbar/Navbar';
 import Profile from './components/Profile/Profile';
 import Notifications from './components/Notifications/Notifications';
+import About from './pages/About/About';
 
 // Blog
 import CreateBlog from './pages/Author/Blog/CreateBlog/CreateBlog';
@@ -46,22 +47,26 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/about" element={<About />} />
+        
+        {/* Dashboard */}
 
         // Blogs
         <Route path="/createblog" element={<CreateBlog />} />
         <Route path="/viewblogs" element={<ViewBlogs />} />
         <Route path="/blogs/:id" element={<BlogDetail />} />
+        <Route path="/publicblogs" element={<ViewBlogs />} />
 
         <Route path="/notifications" element={<Notifications />} />
         
         // Author
         <Route path="/authordashboard" element={<AuthorDashboard user={user} />} />
-        <Route path="/addpublications" element={<AddPublication user={user} />} />
+        <Route path="/admin/addpublications" element={<AddPublication user={user} />} />
         <Route path="/addbook" element={<AddBook />} />
 
         // Admin
         <Route path="/admin/viewpublications" element={<AdminNotification />} />
-        <Route path="/admindashboard" element={<AdminDashboard />} />
+        <Route path="/admin/admindashboard" element={<AdminDashboard />} />
         <Route path="/admin/requests/:id" element={<BookRequestDetail />} />
 
         // Viewer
