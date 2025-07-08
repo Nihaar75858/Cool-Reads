@@ -10,9 +10,9 @@ import Notifications from './components/Notifications/Notifications';
 import About from './pages/About/About';
 
 // Blog
-import CreateBlog from './pages/Author/Blog/CreateBlog/CreateBlog';
-import ViewBlogs from './pages/Author/Blog/ViewBlog/ViewBlog';
-import BlogDetail from './pages/Author/Blog/ViewBlog/BlogDetail';
+import CreateBlog from './pages/Blog/CreateBlog/CreateBlog';
+import ViewBlogs from './pages/Blog/ViewBlog/ViewBlog';
+import BlogDetail from './pages/Blog/ViewBlog/BlogDetail';
 
 
 // Author
@@ -56,18 +56,18 @@ function App() {
         <Route path="/viewblogs" element={<ViewBlogs />} />
         <Route path="/blogs/:id" element={<BlogDetail />} />
         <Route path="/publicblogs" element={<ViewBlogs />} />
-
-        <Route path="/notifications" element={<Notifications />} />
         
         // Author
-        <Route path="/authordashboard" element={<AuthorDashboard user={user} />} />
-        <Route path="/admin/addpublications" element={<AddPublication user={user} />} />
-        <Route path="/addbook" element={<AddBook />} />
+        <Route path="/author/authordashboard" element={<AuthorDashboard user={user} />} />
+        <Route path="/author/addbook" element={<AddBook />} />
+        <Route path="/author/notifications" element={<Notifications />} />
 
         // Admin
+        <Route path="/admin/addpublications" element={<AddPublication user={user} />} />
         <Route path="/admin/viewpublications" element={<AdminNotification />} />
         <Route path="/admin/admindashboard" element={<AdminDashboard />} />
         <Route path="/admin/requests/:id" element={<BookRequestDetail />} />
+        <Route path="/admin/notifications" element={<Notifications />} />
 
         // Viewer
         <Route path="/viewerdashboard" element={<ViewerDashboard user={user} />} />

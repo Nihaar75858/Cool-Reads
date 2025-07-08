@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { useUser } from '../../../../components/Context/UserContext';
+import { useUser } from '../../../components/Context/UserContext';
 
 const CreateBlog = () => {
   const [authorFirstName, setAuthorFirstName] = useState('');

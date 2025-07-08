@@ -23,8 +23,8 @@ const NavigationConfig = {
         { name: "Notifications", to: "/admin/notifications", submenus: null },
     ],
     2: [
-        { name: "Home", to: "/authordashboard", submenus: null },
-        { name: "Books", to: "/addbook", submenus: null },
+        { name: "Home", to: "/author/authordashboard", submenus: null },
+        { name: "Books", to: "/author/addbook", submenus: null },
         {
             name: "Blogs", submenus: [
                 { name: "Create Blog", to: "/createblog" },
