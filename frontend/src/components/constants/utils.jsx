@@ -3,7 +3,7 @@ const NavigationConfig = {
         { name: "Home", to: "/", submenus: null },
         { name: "About", to: "/about", submenus: null },
         { name: "Blogs", to: "/publicblogs", submenus: null },
-        { name: "Books", to: "/publicbooks", submenus: null },
+        { name: "Books", to: "/pubbooks", submenus: null },
     ],
     1: [
         { name: "Home", to: "/admin/admindashboard", submenus: null },

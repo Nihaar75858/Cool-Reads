@@ -8,13 +8,14 @@ import Navbar from './components/Navbar/Navbar';
 import Profile from './components/Profile/Profile';
 import Notifications from './components/Notifications/Notifications';
 import About from './pages/About/About';
+import PubBlogs from './pages/Public/PubBlog/PubBlogs';
+import PubBooks from './pages/Public/PubBooks/PubBooks';
 
 
 // Blog
 import CreateBlog from './pages/Blog/CreateBlog/CreateBlog';
 import ViewBlogs from './pages/Blog/ViewBlog/ViewBlog';
 import BlogDetail from './pages/Blog/ViewBlog/BlogDetail';
-import PubBlogs from './pages/Public/PubBlog/PubBlogs';
 
 
 // Author
@@ -51,6 +52,8 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/about" element={<About />} />
+        <Route path='/pubbooks' element={<PubBooks />} />
+        <Route path="/publicblogs" element={<PubBlogs />} />
         
         {/* Dashboard */}
 
@@ -58,7 +61,6 @@ function App() {
         <Route path="/createblog" element={<CreateBlog />} />
         <Route path="/viewblogs" element={<ViewBlogs />} />
         <Route path="/blogs/:id" element={<BlogDetail />} />
-        <Route path="/publicblogs" element={<PubBlogs />} />
         
         // Author
         <Route path="/author/authordashboard" element={<AuthorDashboard user={user} />} />

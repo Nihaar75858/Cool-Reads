@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 const PubBooks = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const [books, setBooks] = useState([]);
     const [filteredBooks, setFilteredBooks] = useState([]);
 
-    const fetchBooks = async (authorId) => {
+    const fetchPublicBooks = async () => {
         try {
-            const res = await fetch(`http://localhost:5000/api/books/author/${authorId}`);
+            const res = await fetch(`http://localhost:5000/api/public/pubbooks`);
             const data = await res.json();
 
             const acceptedBooks = data.filter(book => book.status === 'published');
@@ -17,6 +18,12 @@ const PubBooks = () => {
             console.error("Failed to fetch books:", err);
         }
     };
+
+    useEffect(() => {
+        axios.get('http://localhost:5000/api/public/pubbooks')
+            .then(res => setBooks(res.data))
+            .catch(err => console.error(err));
+    }, []);
 
 
     const handleSearch = (e) => {
@@ -35,7 +42,7 @@ const PubBooks = () => {
                 {/* Search bar */}
                 <input
                     type="text"
-                    placeholder="Search your books..."
+                    placeholder="Search books..."
                     className="p-3 border border-gray-300 rounded w-full md:w-1/2 mb-6"
                     value={searchQuery}
                     onChange={handleSearch}
@@ -43,7 +50,7 @@ const PubBooks = () => {
 
                 {/* Books Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {filteredBooks.map((book) => (
+                    {books.map((book) => (
                         <div key={book._id} className="bg-white p-6 rounded-lg shadow-md">
                             {/* Book Cover Image */}
                             {book.bookCover && (
@@ -57,7 +64,7 @@ const PubBooks = () => {
                             <p className="truncate mb-2">{book.abstract}</p>
                         </div>
                     ))}
-                    {filteredBooks.length === 0 && (
+                    {books.length === 0 && (
                         <p className="text-gray-600 col-span-full">No books found.</p>
                     )}
                 </div>
