@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Navbar from '../../../components/Navbar/Navbar';
 
 const AddPublication = () => {
   const [formData, setFormData] = useState({
@@ -49,7 +48,6 @@ const AddPublication = () => {
 
   return (
     <>
-      <Navbar />
       <div className="max-w-3xl mx-auto p-6 bg-white shadow-md rounded mt-10">
         <h1 className="text-2xl font-bold mb-4 text-blue-600">Add New Publication</h1>
         <form onSubmit={handleSubmit} className="space-y-4">

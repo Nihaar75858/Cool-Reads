@@ -42,4 +42,13 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
+router.get('/pubblogs', async (req, res) => {
+    try {
+        const blogs = await Blog.find().sort({ createdAt: -1 });
+        res.json(blogs);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
 module.exports = router;
