@@ -130,7 +130,7 @@ const Dashboard = () => {
             <ul className="space-y-2 text-gray-400 text-sm">
               <li><a href="/about" className="hover:text-white">About</a></li>
               <li><a href="/publicblogs" className="hover:text-white">Blogs</a></li>
-              <li><a href="#" className="hover:text-white">Books</a></li>
+              <li><a href="/pubbooks" className="hover:text-white">Books</a></li>
               <li><a href="/register" className="hover:text-white">Register</a></li>
             </ul>
           </div>
