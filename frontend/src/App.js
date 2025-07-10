@@ -6,7 +6,6 @@ import Login from './pages/Auth/Login';
 import Register from './pages/Auth/Register';
 import Navbar from './components/Navbar/Navbar';
 import Profile from './components/Profile/Profile';
-import Notifications from './components/Notifications/Notifications';
 import About from './pages/About/About';
 import PubBlogs from './pages/Public/PubBlog/PubBlogs';
 import PubBooks from './pages/Public/PubBooks/PubBooks';
@@ -20,14 +19,15 @@ import BlogDetail from './pages/Blog/ViewBlog/BlogDetail';
 
 // Author
 import AuthorDashboard from './pages/DashBoard/AuthorDashboard';
-import AddPublication from './pages/Admin/Publishing/AddPublication';
 import AddBook from './pages/Author/AddBook/AddBook';
 import AuthorNotifications from './pages/Author/Notifications/AuthorNotifications';
 
 // Admin
-import AdminNotification from './pages/Admin/Notification/AdminNotifications';
+import AdminNotification from './pages/Admin/Notification/AdminNotification';
 import AdminDashboard from './pages/DashBoard/AdminDashboard';
-import BookRequestDetail from './pages/Admin/Notification/BookRequestDetail';
+import BookRequestDetail from './pages/Admin/Publishing/BookRequestDetail';
+import ViewPublication from './pages/Admin/Publishing/ViewPublication';
+import AddPublication from './pages/Admin/Publishing/AddPublication';
 
 // Viewer
 import ViewerDashboard from './pages/DashBoard/ViewerDashboard';
@@ -69,10 +69,10 @@ function App() {
 
         // Admin
         <Route path="/admin/addpublications" element={<AddPublication user={user} />} />
-        <Route path="/admin/viewpublications" element={<AdminNotification />} />
+        <Route path="/admin/viewpublications" element={<ViewPublication />} />
         <Route path="/admin/admindashboard" element={<AdminDashboard />} />
         <Route path="/admin/requests/:id" element={<BookRequestDetail />} />
-        <Route path="/admin/notifications" element={<Notifications />} />
+        <Route path="/admin/notifications" element={<AdminNotification />} />
 
         // Viewer
         <Route path="/viewerdashboard" element={<ViewerDashboard user={user} />} />

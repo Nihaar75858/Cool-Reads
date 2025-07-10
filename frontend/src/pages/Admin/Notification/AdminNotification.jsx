@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { useUser } from '../Context/UserContext';
+import { useUser } from '../../../components/Context/UserContext';
 
-const Notifications = () => {
+const AdminNotification = () => {
   const { user } = useUser();
   const [notifications, setNotifications] = useState([]);
 
@@ -35,4 +35,4 @@ const Notifications = () => {
   );
 };
 
-export default Notifications;
+export default AdminNotification;

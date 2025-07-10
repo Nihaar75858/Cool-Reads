@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
-const AdminNotification = () => {
+const ViewPublication = () => {
   const [requests, setRequests] = useState([]);
 
   useEffect(() => {
@@ -33,4 +33,4 @@ const AdminNotification = () => {
   );
 };
 
-export default AdminNotification;
+export default ViewPublication;
