@@ -10,7 +10,7 @@ const NavigationConfig = {
         {
             name: "Publications", submenus: [
                 { name: "View Publications", to: "/admin/viewpublications" },
-                { name: "Review Publications", to: "/admin/addpublications" },
+                { name: "Review Publications", to: "/admin/reviewpublication" },
                 { name: "Modify Publications", to: "/admin/modifybook" },
             ]
         },

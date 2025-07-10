@@ -12,7 +12,7 @@ const BookRequestDetail = () => {
       .then(res => {
         const found = res.data.find(b => b._id === id);
         if (found) setBook(found);
-        else navigate('/admin/requests'); // redirect if not found
+        else navigate('/admin/viewpublications'); // redirect if not found
       })
       .catch(err => console.error(err));
   }, [id, navigate]);

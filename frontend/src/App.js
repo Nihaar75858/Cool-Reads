@@ -10,12 +10,10 @@ import About from './pages/About/About';
 import PubBlogs from './pages/Public/PubBlog/PubBlogs';
 import PubBooks from './pages/Public/PubBooks/PubBooks';
 
-
 // Blog
 import CreateBlog from './pages/Blog/CreateBlog/CreateBlog';
 import ViewBlogs from './pages/Blog/ViewBlog/ViewBlog';
 import BlogDetail from './pages/Blog/ViewBlog/BlogDetail';
-
 
 // Author
 import AuthorDashboard from './pages/DashBoard/AuthorDashboard';
@@ -28,6 +26,8 @@ import AdminDashboard from './pages/DashBoard/AdminDashboard';
 import BookRequestDetail from './pages/Admin/Publishing/BookRequestDetail';
 import ViewPublication from './pages/Admin/Publishing/ViewPublication';
 import AddPublication from './pages/Admin/Publishing/AddPublication';
+import ReviewPublication from './pages/Admin/Publishing/ReviewPublication';
+import ModifyPublications from './pages/Admin/Publishing/ModifyPublications';
 
 // Viewer
 import ViewerDashboard from './pages/DashBoard/ViewerDashboard';
@@ -73,6 +73,8 @@ function App() {
         <Route path="/admin/admindashboard" element={<AdminDashboard />} />
         <Route path="/admin/requests/:id" element={<BookRequestDetail />} />
         <Route path="/admin/notifications" element={<AdminNotification />} />
+        <Route path="/admin/reviewpublication" element={<ReviewPublication />} />
+        <Route path="/admin/modifybook/:id" element={<ModifyPublications />} />
 
         // Viewer
         <Route path="/viewerdashboard" element={<ViewerDashboard user={user} />} />
