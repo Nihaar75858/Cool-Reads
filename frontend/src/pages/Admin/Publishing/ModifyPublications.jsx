@@ -36,9 +36,9 @@ const ModifyPublications = () => {
   if (!book) return <div className="text-white p-6">Loading...</div>;
 
   return (
-    <div className="min-h-screen bg-custombg p-6 text-white justify-center items-center">
+    <div className="min-h-screen bg-custombg py-6 text-black items-center flex flex-col">
       <h2 className="text-3xl font-bold mb-6">Edit Book: {book.title}</h2>
-      <form onSubmit={handleSubmit} className="space-y-4 max-w-xl">
+      <form onSubmit={handleSubmit} className="space-y-4 max-w-xl mx-auto w-full p-6">
         
         <div>
           <label className="block mb-1">Title</label>

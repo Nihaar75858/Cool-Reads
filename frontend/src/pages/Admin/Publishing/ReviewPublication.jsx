@@ -15,7 +15,7 @@ const ReviewPublication = () => {
 
   return (
     <div className="min-h-screen p-6 bg-custombg">
-      <h2 className="text-2xl font-bold mb-4">Book Requests</h2>
+      <h2 className="text-2xl font-bold mb-4">Review Books</h2>
       {requests.length === 0 ? (
         <p className="text-white">No new requests</p>
       ) : (

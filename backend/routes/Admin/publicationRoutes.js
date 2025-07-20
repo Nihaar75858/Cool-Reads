@@ -63,11 +63,6 @@ router.put('/accept/:id', async (req, res) => {
 
     console.log("Updated Request:", updatedRequest);
 
-    // if (!updatedRequest) {
-    //   return res.status(404).json({ error: 'Book request not found' });
-    // }
-
-    // 2. Create a new publication from the book request
     const newPublication = new Publication({
       title: updatedRequest.title,
       author: updatedRequest.authorNames.join(', '),
