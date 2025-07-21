@@ -51,6 +51,7 @@ const CreateBlog = () => {
       await axios.post('http://localhost:5000/api/blogs', payload);
       alert('Blog created!');
       setFormData({ title: '', content: '' });
+      navigate('/viewblogs');
     } catch (err) {
       alert('Error creating blog');
       console.error(err);

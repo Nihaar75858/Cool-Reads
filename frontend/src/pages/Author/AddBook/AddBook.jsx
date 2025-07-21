@@ -59,7 +59,7 @@ const AddBook = () => {
 
       if (res.data.success) {
         alert('Book added successfully!');
-        navigate('/authordashboard');
+        navigate('/author/authordashboard');
       } else {
         setError(res.data.message || 'Upload failed');
       }

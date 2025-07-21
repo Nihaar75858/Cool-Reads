@@ -37,8 +37,8 @@ const AuthorNotifications = () => {
 
   return (
     <div className="min-h-screen bg-custombg p-8">
-      <div className="max-w-4xl mx-auto bg-white shadow-md rounded-lg p-6">
-        <h1 className="text-3xl font-bold mb-6 text-navtext">Your Book Notifications</h1>
+      <div className="max-w-4xl mx-auto p-6">
+        <h1 className="text-4xl font-bold mb-6 text-black">Your Book Notifications</h1>
 
         {loading ? (
           <p className="text-gray-600">Loading notifications...</p>

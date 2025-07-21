@@ -2,11 +2,13 @@
 const mongoose = require('mongoose');
 
 const notificationSchema = new mongoose.Schema({
-  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  type: String,          // e.g., 'BookRequest'
   message: String,
-  link: String,
-  isRead: { type: Boolean, default: false },
-  createdAt: { type: Date, default: Date.now }
+  recipientRole: String, // e.g., 'Admin'
+  bookId: { type: mongoose.Schema.Types.ObjectId, ref: 'Book' },
+  authorId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+  read: { type: Boolean, default: false },
+  date: { type: Date, default: Date.now },
 });
 
 module.exports = mongoose.model('Notification', notificationSchema);

@@ -23,7 +23,7 @@ const cpUpload = upload.fields([
 
 router.post('/request', cpUpload, async (req, res) => {
   try {
-    const { title, pages, isbn, dateAdded, abstract} = req.body;
+    const { title, pages, isbn, dateAdded, abstract } = req.body;
     const authorNames = req.body.authorNames instanceof Array
       ? req.body.authorNames
       : [req.body.authorNames];
@@ -47,6 +47,18 @@ router.post('/request', cpUpload, async (req, res) => {
       status: 'pending'
     });
     await newBookRequest.save();
+
+    const notification = new Notification({
+      type: 'BookRequest',
+      message: `Author ${req.user.firstName} ${req.user.lastName} requested publishing: ${title}`,
+      recipientRole: 'Admin',
+      bookId: newBook._id,
+      authorId: authorId,
+      read: false,
+      date: new Date(),
+    });
+
+    await notification.save();
 
     res.status(201).json({ success: true, message: 'Book request submitted to admin' });
   } catch (err) {

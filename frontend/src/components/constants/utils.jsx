@@ -30,6 +30,7 @@ const NavigationConfig = {
                 { name: "View Blogs", to: "/viewblogs" },
             ]
         },
+        { name: "Notifications", to: "/author/notifications", submenus: null },
     ],
     3: [ // Viewer
         { name: "Home", to: "/viewer/viewerdashboard", submenus: null },

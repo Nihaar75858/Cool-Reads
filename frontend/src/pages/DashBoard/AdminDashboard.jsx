@@ -5,11 +5,13 @@ const AdminDashboard = () => {
   const [userCount, setUserCount] = useState(0);
   const [bookCount, setBookCount] = useState(0);
   const [blogCount, setBlogCount] = useState(0);
+  const [notifs, setNotifs] = useState([]);
 
   useEffect(() => {
     fetchCounts();
   }, []);
 
+  
   const fetchCounts = async () => {
     try {
       const [usersRes, booksRes, blogsRes] = await Promise.all([
@@ -17,6 +19,8 @@ const AdminDashboard = () => {
         axios.get(`http://localhost:5000/api/admin/bookcount`),
         axios.get(`http://localhost:5000/api/admin/blogcount`),
       ]);
+
+      const notifications = await Notification.find({ recipientRole: 'Admin', read: false });
 
       // Log responses for debugging
       console.log("Users:", usersRes.data);
@@ -26,6 +30,7 @@ const AdminDashboard = () => {
       setUserCount(usersRes.data.count);         // ✅ Use .count for users
       setBookCount(booksRes.data.count);        // ❗ Still using .length if books returns array
       setBlogCount(blogsRes.data.count);        // ❗ Still using .length if blogs returns array
+      setNotifs(notifications);
     } catch (err) {
       console.error("Failed to fetch dashboard counts:", err);
     }
