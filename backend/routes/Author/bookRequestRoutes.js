@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const multer = require('multer');
 const BookRequest = require('../../models/BookRequest');
+const Notification = require('../../models/Notification');
 
 // Configure multer with memory storage
 const storage = multer.diskStorage({
@@ -23,7 +24,7 @@ const cpUpload = upload.fields([
 
 router.post('/request', cpUpload, async (req, res) => {
   try {
-    const { title, pages, isbn, dateAdded, abstract } = req.body;
+    const { authorId, title, pages, isbn, dateAdded, abstract, genres } = req.body;
     const authorNames = req.body.authorNames instanceof Array
       ? req.body.authorNames
       : [req.body.authorNames];
@@ -36,12 +37,14 @@ router.post('/request', cpUpload, async (req, res) => {
     }
 
     const newBookRequest = new BookRequest({
+      authorId,
       title,
       pages,
       isbn,
       dateAdded,
       abstract,
       authorNames,
+      genres,
       bookDocument,
       bookCover,
       status: 'pending'
@@ -50,9 +53,9 @@ router.post('/request', cpUpload, async (req, res) => {
 
     const notification = new Notification({
       type: 'BookRequest',
-      message: `Author ${req.user.firstName} ${req.user.lastName} requested publishing: ${title}`,
+      message: `Author ${authorNames} requested publishing: ${title}`,
       recipientRole: 'Admin',
-      bookId: newBook._id,
+      bookId: newBookRequest._id,
       authorId: authorId,
       read: false,
       date: new Date(),

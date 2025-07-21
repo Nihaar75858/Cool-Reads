@@ -11,26 +11,26 @@ const AdminDashboard = () => {
     fetchCounts();
   }, []);
 
-  
+
   const fetchCounts = async () => {
     try {
-      const [usersRes, booksRes, blogsRes] = await Promise.all([
+      const [usersRes, booksRes, blogsRes, notifications] = await Promise.all([
         axios.get(`http://localhost:5000/api/admin/users`),
         axios.get(`http://localhost:5000/api/admin/bookcount`),
         axios.get(`http://localhost:5000/api/admin/blogcount`),
+        axios.get(`http://localhost:5000/api/admin/notifs`)
       ]);
-
-      const notifications = await Notification.find({ recipientRole: 'Admin', read: false });
 
       // Log responses for debugging
       console.log("Users:", usersRes.data);
       console.log("Books:", booksRes.data);
       console.log("Blogs:", blogsRes.data);
+      console.log("Notifications:", notifications.data);
 
       setUserCount(usersRes.data.count);         // ✅ Use .count for users
       setBookCount(booksRes.data.count);        // ❗ Still using .length if books returns array
       setBlogCount(blogsRes.data.count);        // ❗ Still using .length if blogs returns array
-      setNotifs(notifications);
+      setNotifs(notifications.data);
     } catch (err) {
       console.error("Failed to fetch dashboard counts:", err);
     }
@@ -72,21 +72,23 @@ const AdminDashboard = () => {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td className="border px-4 py-2">John Doe</td>
-                  <td className="border px-4 py-2">Enrolled in React Course</td>
-                  <td className="border px-4 py-2">Jan 1, 2025</td>
-                </tr>
-                <tr>
-                  <td className="border px-4 py-2">Jane Smith</td>
-                  <td className="border px-4 py-2">Submitted Feedback</td>
-                  <td className="border px-4 py-2">Jan 3, 2025</td>
-                </tr>
-                <tr>
-                  <td className="border px-4 py-2">Robert Brown</td>
-                  <td className="border px-4 py-2">Generated Report</td>
-                  <td className="border px-4 py-2">Jan 4, 2025</td>
-                </tr>
+                {notifs.length === 0 ? (
+                  <tr>
+                    <td colSpan="3" className="border px-4 py-2 text-center">
+                      No recent activities.
+                    </td>
+                  </tr>
+                ) : (
+                  notifs.map((n) => (
+                    <tr key={n._id}>
+                      <td className="border px-4 py-2">{n.authorId.firstName + " " + n.authorId.lastName || 'Unknown User'}</td>
+                      <td className="border px-4 py-2">{n.message}</td>
+                      <td className="border px-4 py-2">
+                        {new Date(n.date).toLocaleDateString()}
+                      </td>
+                    </tr>
+                  ))
+                )}
               </tbody>
             </table>
           </div>

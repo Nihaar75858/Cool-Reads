@@ -1,6 +1,31 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import Select from 'react-select'
+import { useUser } from '../../../components/Context/UserContext';
 import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+
+const genresList = [
+  { value: 'Fantasy', label: 'Fantasy' },
+  { value: 'Science Fiction', label: 'Science Fiction' },
+  { value: 'Dystopian', label: 'Dystopian' },
+  { value: 'Adventure', label: 'Adventure' },
+  { value: 'Action', label: 'Action' },
+  { value: 'Mystery', label: 'Mystery' },
+  { value: 'Thriller', label: 'Thriller' },
+  { value: 'Crime', label: 'Crime' },
+  { value: 'Horror', label: 'Horror' }
+  // value: "Fantasy", "Science Fiction", "Dystopian", "Adventure", "Action", "Mystery",
+  // "Thriller", "Crime", "Horror", "Historical Fiction", "Romance", "Contemporary",
+  // "Drama", "Satire", "Magical Realism", "Graphic Novel", "Short Stories",
+  // "Young Adult (YA)", "New Adult", "Children's Fiction", "Literary Fiction",
+  // "Classic", "Memoir", "Biography", "Autobiography", "Self-Help", "Health & Wellness",
+  // "True Crime", "Essays", "Poetry", "Spirituality", "Religion", "Philosophy",
+  // "Science & Nature", "Travel", "Guide / How-To", "Cookbooks", "Art & Photography",
+  // "History", "Politics", "Business & Economics", "Technology", "Education",
+  // "Parenting & Family", "Sports & Recreation", "Humor", "Western", "Paranormal",
+  // "Urban Fantasy", "Chick Lit"
+];
 
 const AddBook = () => {
   const [bookName, setBookName] = useState('');
@@ -13,7 +38,20 @@ const AddBook = () => {
   const [coverImage, setCoverImage] = useState(null);
   const [error, setError] = useState('');
   const [message, setMessage] = useState('');
+  const [selectedGenres, setSelectedGenres] = useState([]);
+  const [authorId, setAuthorId] = useState('');
   const navigate = useNavigate();
+
+  const { user } = useUser();
+
+  useEffect(() => {
+    if (user) { 
+      setAuthorId(user.id); // Set authorId from user context  
+      console.log("Author ID:", user.id);
+    } else {
+      console.error("User not found in context"); 
+    }
+  }, [user]); // Run effect when user changes
 
   const handleAuthorChange = (index, value) => {
     const updatedAuthors = [...authorNames];
@@ -28,6 +66,11 @@ const AddBook = () => {
   const handleBookUpload = async (e) => {
     e.preventDefault();
 
+    if (!user || !user.id) {
+      alert("User not found. Please log in again.");
+      return;
+    }
+
     if (!bookFile || !coverImage) {
       setError('Please upload both the book file and cover image.');
       return;
@@ -38,7 +81,13 @@ const AddBook = () => {
       return;
     }
 
+    if (selectedGenres.length === 0) {
+      setError('Please select at least one genre.');
+      return;
+    }
+
     const formData = new FormData();
+    formData.append('authorId', authorId);
     formData.append('title', bookName);
     formData.append('pages', pages);
     formData.append('isbn', isbn);
@@ -47,6 +96,7 @@ const AddBook = () => {
     formData.append('bookDocument', bookFile);
     formData.append('bookCover', coverImage);
     authorNames.forEach(name => formData.append('authorNames', name));
+    selectedGenres.forEach(genre => formData.append('genres', genre.value));
 
     console.log("FormData ready to send");
 
@@ -59,6 +109,7 @@ const AddBook = () => {
 
       if (res.data.success) {
         alert('Book added successfully!');
+        console.log("Book request submitted successfully:", res.data);
         navigate('/author/authordashboard');
       } else {
         setError(res.data.message || 'Upload failed');
@@ -154,6 +205,18 @@ const AddBook = () => {
             className="w-full border rounded px-4 py-2"
             rows={4}
             required
+          />
+        </div>
+
+        {/* ✅ Fancy genres multi-select */}
+        <div>
+          <label className="block mb-1">Select Genres</label>
+          <Select
+            isMulti
+            options={genresList}
+            value={selectedGenres}
+            onChange={setSelectedGenres}
+            className="text-black"
           />
         </div>
 

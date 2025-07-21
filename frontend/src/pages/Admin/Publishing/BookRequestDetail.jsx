@@ -30,7 +30,7 @@ const BookRequestDetail = () => {
   if (!book) return <div className="text-white p-6">Loading...</div>;
 
   return (
-    <div className="min-h-screen bg-custombg p-6 text-white">
+    <div className="min-h-screen bg-custombg p-6 text-black">
       <h2 className="text-3xl font-bold mb-4">{book.title}</h2>
       <p><strong>Author(s):</strong> {book.authorNames.join(', ')}</p>
       <p><strong>ISBN:</strong> {book.isbn}</p>

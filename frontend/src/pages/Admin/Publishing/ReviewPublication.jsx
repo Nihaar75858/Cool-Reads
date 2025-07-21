@@ -24,7 +24,7 @@ const ReviewPublication = () => {
             <li key={req._id}>
               <Link to={`/admin/modifybook/${req._id}`} className="block bg-logobg p-4 rounded shadow text-white hover:bg-opacity-80">
                 <p><strong>Title:</strong> {req.title}</p>
-                <p><strong>Author(s):</strong> {req.author}</p>
+                <p><strong>Author(s):</strong> {req.authorNames}</p>
                 <p><strong>Status:</strong> <span className="capitalize">{req.status}</span></p>
               </Link>
             </li>

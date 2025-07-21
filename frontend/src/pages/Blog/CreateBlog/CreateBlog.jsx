@@ -36,7 +36,7 @@ const CreateBlog = () => {
   const handleSubmit = async e => {
     e.preventDefault();
 
-    if (!user || !user._id) {
+    if (!user || !user.id) {
       alert("User not found. Please log in again.");
       return;
     }
@@ -45,7 +45,7 @@ const CreateBlog = () => {
       const payload = {
         ...formData,
         author: authorFirstName + " " + authorLastName,
-        authorId: user._id, // ✅ send MongoDB ObjectId of the author
+        authorId: authorId // ✅ send MongoDB ObjectId of the author
       };
 
       await axios.post('http://localhost:5000/api/blogs', payload);

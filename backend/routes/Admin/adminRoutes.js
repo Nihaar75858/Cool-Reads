@@ -5,6 +5,7 @@ const User = require('../../models/Users');
 const Publication = require('../../models/Publication');
 const Blog = require('../../models/Blog'); // Assuming blogs are stored in Blog model
 const { authenticate, authorizeRoles } = require('../../middleware/auth');
+const Notification = require('../../models/Notification');
 
 // Get the count of users
 router.get('/users', async (req, res) => {
@@ -42,6 +43,15 @@ router.get('/books', authenticate, authorizeRoles('admin'), async (req, res) => 
   try {
     const books = await BookRequest.find();
     res.json(books);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+router.get('/notifs', async (req, res) => {
+  try {
+    const notifications = await Notification.find().populate('authorId').sort({ date: -1 });
+    res.json(notifications);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
