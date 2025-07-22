@@ -59,6 +59,7 @@ router.post('/request', cpUpload, async (req, res) => {
       authorId: authorId,
       read: false,
       date: new Date(),
+      status: 'Pending',
     });
 
     await notification.save();

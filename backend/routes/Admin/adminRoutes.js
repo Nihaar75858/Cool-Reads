@@ -108,6 +108,7 @@ router.put('/accept/:id', async (req, res) => {
       authorId: updatedRequest.authorId,
       read: false,
       date: new Date(),
+      status: 'Published',
     });
 
     await notification.save();
