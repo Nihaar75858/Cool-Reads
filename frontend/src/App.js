@@ -25,7 +25,6 @@ import AdminNotification from './pages/Admin/Notification/AdminNotification';
 import AdminDashboard from './pages/DashBoard/AdminDashboard';
 import BookRequestDetail from './pages/Admin/Publishing/BookRequestDetail';
 import ViewPublication from './pages/Admin/Publishing/ViewPublication';
-import AddPublication from './pages/Admin/Publishing/AddPublication';
 import ReviewPublication from './pages/Admin/Publishing/ReviewPublication';
 import ModifyPublications from './pages/Admin/Publishing/ModifyPublications';
 
@@ -68,7 +67,6 @@ function App() {
         <Route path="/author/notifications" element={<AuthorNotifications />} />
 
         // Admin
-        <Route path="/admin/addpublications" element={<AddPublication user={user} />} />
         <Route path="/admin/viewpublications" element={<ViewPublication />} />
         <Route path="/admin/admindashboard" element={<AdminDashboard />} />
         <Route path="/admin/requests/:id" element={<BookRequestDetail />} />

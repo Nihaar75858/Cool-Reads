@@ -30,46 +30,69 @@ const BookRequestDetail = () => {
   if (!book) return <div className="text-white p-6">Loading...</div>;
 
   return (
-    <div className="min-h-screen bg-custombg p-6 text-black">
-      <h2 className="text-3xl font-bold mb-4">{book.title}</h2>
-      <p><strong>Author(s):</strong> {book.authorNames.join(', ')}</p>
-      <p><strong>ISBN:</strong> {book.isbn}</p>
-      <p><strong>Pages:</strong> {book.pages}</p>
-      <p><strong>Date Added:</strong> {new Date(book.dateAdded).toLocaleDateString()}</p>
-      <p><strong>Abstract:</strong> {book.abstract}</p>
-      <p><strong>Status:</strong> {book.status}</p>
+    <div className="min-h-screen bg-custombg p-6 text-black justify-center items-center flex flex-col">
 
-      {book.bookCover && (
-        <div className="my-4">
-          <img
-            src={`http://localhost:5000/${book.bookCover}`}
-            alt="Book Cover"
-            className="max-w-xs rounded"
-          />
+      <form className="space-y-4 max-w-xl mx-auto w-full p-6">
+
+        <h2 className="text-3xl font-bold mb-4 text-center mx-auto">{book.title}</h2>
+        {book.bookCover && (
+          <div className="my-4 items-center flex justify-center">
+            <img
+              src={`http://localhost:5000/${book.bookCover}`}
+              alt="Book Cover"
+              className="max-w-xs rounded"
+            />
+          </div>
+        )}
+
+        <div>
+          <label className="block mb-1 font-bold">Author(s)</label>
+          <p className="text-black mx-20">{book.authorNames.join(', ')}</p>
         </div>
-      )}
 
-      {book.bookDocument && (
-        <div className="mb-4">
-          <a
-            href={`http://localhost:5000/${book.bookDocument}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="underline text-blue-300"
+        <div>
+          <label className="block mb-1 font-bold">ISBN</label>
+          <p className="text-black mx-20">{book.isbn}</p>
+        </div>
+
+        <div>
+          <label className="block mb-1 font-bold">Pages</label>
+          <p className="text-black mx-20">{book.pages}</p>
+        </div>
+
+        <div>
+          <label className="block mb-1 font-bold">Abstract</label>
+          <p className="text-black mx-20">{book.abstract}</p>
+        </div>
+
+        <div>
+          <label className="block mb-1 font-bold">Genres</label>
+          <p className="text-black mx-20">{book.genres.join(', ')}</p>
+        </div>
+
+        {book.bookDocument && (
+          <div className="mb-4">
+            <a
+              href={`http://localhost:5000/${book.bookDocument}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline text-blue-300"
+            >
+              View / Download Book File
+            </a>
+          </div>
+        )}
+
+        {book.status === 'pending' && (
+          <button
+            onClick={handleAccept}
+            className="bg-green-600 px-4 py-2 rounded hover:bg-green-700 items-center flex text-white mx-auto justify-center"
           >
-            View / Download Book File
-          </a>
-        </div>
-      )}
+            Accept Book
+          </button>
+        )}
 
-      {book.status === 'pending' && (
-        <button
-          onClick={handleAccept}
-          className="bg-green-600 px-4 py-2 rounded hover:bg-green-700"
-        >
-          Accept Book
-        </button>
-      )}
+      </form>
     </div>
   );
 };
