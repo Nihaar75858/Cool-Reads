@@ -79,4 +79,13 @@ router.get('/author/:id', async (req, res) => {
   }
 });
 
+router.get('/author/notifs/:id', async (req, res) => {
+  try {
+    const notifications = await Notification.find({ recipientRole: 'Author' });
+    res.json(notifications);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 module.exports = router;

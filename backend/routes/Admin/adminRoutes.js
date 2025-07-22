@@ -50,7 +50,7 @@ router.get('/books', authenticate, authorizeRoles('admin'), async (req, res) => 
 
 router.get('/notifs', async (req, res) => {
   try {
-    const notifications = await Notification.find().populate('authorId').sort({ date: -1 });
+    const notifications = await Notification.find({ recipientRole: 'Admin' }).populate('authorId').sort({ date: -1 });
     res.json(notifications);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -79,31 +79,45 @@ router.put('/accept/:id', async (req, res) => {
 
     console.log("Updated Request:", updatedRequest);
 
-    // if (!updatedRequest) {
-    //   return res.status(404).json({ error: 'Book request not found' });
-    // }
+    if (!updatedRequest) {
+      return res.status(404).json({ error: 'Book request not found' });
+    }
 
     // 2. Create a new publication from the book request
     const newPublication = new Publication({
       title: updatedRequest.title,
-      author: updatedRequest.authorNames.join(', '),
+      authors: updatedRequest.authorNames.join(', '),
       pages: updatedRequest.pages,
       isbn: updatedRequest.isbn,
       publishedDate: new Date(),
       abstract: updatedRequest.abstract,
+      genres: updatedRequest.genres,
       bookDocument: updatedRequest.bookDocument,
       bookCover: updatedRequest.bookCover,
+      authorId: updatedRequest.authorId,
       status: 'published',
-      // authorId: updatedRequest.authorId, // ✅ include authorId
     });
 
     await newPublication.save();
+
+    const notification = new Notification({
+      type: 'Publication',
+      message: `Congralulations, your book '${newPublication.title}' has been published successfully on ${newPublication.publishedDate}!`,
+      recipientRole: 'Author',
+      bookId: newPublication._id,
+      authorId: updatedRequest.authorId,
+      read: false,
+      date: new Date(),
+    });
+
+    await notification.save();
 
     // 3. Send both updated request and new publication
     res.json({
       message: 'Book accepted and added to publications',
       updatedRequest,
       publication: newPublication,
+      notification,
     });
 
   } catch (err) {

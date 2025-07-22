@@ -5,7 +5,7 @@ const PublicationSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    author: {
+    authors: {
         type: String,
         required: true
     },
@@ -25,6 +25,10 @@ const PublicationSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    genres: {
+        type: [String],
+        required: true
+    },
     bookDocument: {
         type: String,
         required: true
@@ -33,17 +37,16 @@ const PublicationSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    authorId: {
+        type: mongoose.Schema.Types.ObjectId,  
+        ref: 'Users',
+        required: true
+    },
     status: {
         type: String,
         enum: 'published',
         default: 'draft'
     }
-    // authorId: {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: 'User',
-    //     required: true
-    // }
-
 });
 
 module.exports = mongoose.model('Publications', PublicationSchema);

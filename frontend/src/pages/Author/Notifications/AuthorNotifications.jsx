@@ -8,11 +8,12 @@ const AuthorNotifications = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchAuthorBooks = async () => {
-      if (!user?._id) return;
+    const fetchAuthorNotifications = async () => {
+      // if (!user?._id) return;
       try {
-        const response = await axios.get(`http://localhost:5000/api/books/author/${user._id}`);
+        const response = await axios.get(`http://localhost:5000/api/books/author/notifs/${user._id}`);
         setBooks(response.data);
+        console.log("Fetched books:", response.data);
       } catch (error) {
         console.error("Error fetching books:", error);
       } finally {
@@ -20,18 +21,18 @@ const AuthorNotifications = () => {
       }
     };
 
-    fetchAuthorBooks();
+    fetchAuthorNotifications();
   }, [user]);
 
   const getStatusColor = (status) => {
     switch (status) {
-      case 'Accepted':
-        return 'text-green-600';
+      case 'Published':
+        return 'bg-green-600';
       case 'Rejected':
-        return 'text-red-600';
+        return 'bg-red-600';
       case 'Pending':
       default:
-        return 'text-yellow-500';
+        return 'bg-yellow-500';
     }
   };
 
@@ -47,12 +48,12 @@ const AuthorNotifications = () => {
         ) : (
           <ul className="space-y-4">
             {books.map((book) => (
-              <li key={book._id} className="border p-4 rounded-md shadow-sm bg-gray-50">
+              <li key={book._id} className={`border p-4 rounded-md shadow-sm ${getStatusColor(book.status)}`}>
                 <div className="flex justify-between items-center">
                   <div>
                     <h2 className="text-xl font-semibold text-gray-800">{book.title}</h2>
-                    <p className={`mt-1 font-medium ${getStatusColor(book.status)}`}>
-                      Status: {book.status}
+                    <p className={`mt-1 font-medium text-black`}>
+                      Message: {book.message || 'No message provided'}
                     </p>
                   </div>
                 </div>
