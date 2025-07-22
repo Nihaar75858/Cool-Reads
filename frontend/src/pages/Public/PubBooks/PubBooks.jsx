@@ -1,17 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-
-// Sample genres (you can import your full list if you want)
-const genresList = [
-  { value: 'Fantasy', label: 'Fantasy' },
-  { value: 'Science Fiction', label: 'Science Fiction' },
-  { value: 'Mystery', label: 'Mystery' },
-  { value: 'Romance', label: 'Romance' },
-  { value: 'Thriller', label: 'Thriller' },
-  { value: 'Adventure', label: 'Adventure' },
-  { value: 'Historical Fiction', label: 'Historical Fiction' },
-  // Add as many as you like
-];
+import genresList from '../../../components/Genres/Genres'; // Importing the genres list
 
 const PubBooks = () => {
   const [searchQuery, setSearchQuery] = useState('');

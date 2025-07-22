@@ -4,28 +4,7 @@ import Select from 'react-select'
 import { useUser } from '../../../components/Context/UserContext';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
-
-const genresList = [
-  { value: 'Fantasy', label: 'Fantasy' },
-  { value: 'Science Fiction', label: 'Science Fiction' },
-  { value: 'Dystopian', label: 'Dystopian' },
-  { value: 'Adventure', label: 'Adventure' },
-  { value: 'Action', label: 'Action' },
-  { value: 'Mystery', label: 'Mystery' },
-  { value: 'Thriller', label: 'Thriller' },
-  { value: 'Crime', label: 'Crime' },
-  { value: 'Horror', label: 'Horror' }
-  // value: "Fantasy", "Science Fiction", "Dystopian", "Adventure", "Action", "Mystery",
-  // "Thriller", "Crime", "Horror", "Historical Fiction", "Romance", "Contemporary",
-  // "Drama", "Satire", "Magical Realism", "Graphic Novel", "Short Stories",
-  // "Young Adult (YA)", "New Adult", "Children's Fiction", "Literary Fiction",
-  // "Classic", "Memoir", "Biography", "Autobiography", "Self-Help", "Health & Wellness",
-  // "True Crime", "Essays", "Poetry", "Spirituality", "Religion", "Philosophy",
-  // "Science & Nature", "Travel", "Guide / How-To", "Cookbooks", "Art & Photography",
-  // "History", "Politics", "Business & Economics", "Technology", "Education",
-  // "Parenting & Family", "Sports & Recreation", "Humor", "Western", "Paranormal",
-  // "Urban Fantasy", "Chick Lit"
-];
+import genresList from '../../../components/Genres/Genres'; // Importing the genres list
 
 const AddBook = () => {
   const [bookName, setBookName] = useState('');
