@@ -139,7 +139,11 @@ router.get('/help', async (req, res) => {
 router.post('/help/reply', async (req, res) => {
   const { requestId, replyMessage, userId } = req.body;
   try {
-    const helpRequest = await HelpRequest.findById(requestId);
+    const helpRequest = await HelpRequest.findByIdAndUpdate(
+      requestId,
+      { read: true } // or delete it instead: await HelpRequest.findByIdAndDelete()
+    );
+
     if (!helpRequest) {
       return res.status(404).json({ error: 'Help request not found' });
     }

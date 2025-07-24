@@ -30,6 +30,8 @@ const AuthorNotifications = () => {
         return 'bg-green-600';
       case 'Rejected':
         return 'bg-red-600';
+      case 'Replied':
+        return 'bg-blue-600';
       case 'Pending':
       default:
         return 'bg-yellow-500';

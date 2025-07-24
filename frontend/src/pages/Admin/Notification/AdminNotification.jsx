@@ -34,15 +34,24 @@ const AdminNotification = () => {
       });
 
       alert('Reply sent!');
+
+      // ✅ Clear input field
       setReplies(prev => ({
         ...prev,
         [note._id]: ''
       }));
+
+      // ✅ Remove the request from the list
+      setNotifications(prev =>
+        prev.filter(item => item._id !== note._id)
+      );
+
     } catch (err) {
       console.error('Error sending reply:', err);
       alert('Failed to send reply.');
     }
   };
+
 
   return (
     <div className="p-6 bg-custombg min-h-screen">
