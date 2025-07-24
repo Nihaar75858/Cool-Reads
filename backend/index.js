@@ -20,6 +20,7 @@ const blogRoutes = require('./routes/Blog/blogRoutes');
 const commentRoutes = require('./routes/Comments/commentRoutes');
 const viewerRoutes = require('./routes/Viewer/viewerRoutes');
 const pubroutes = require('./routes/Public/publicroutes');
+const helpCenterRoutes = require('./routes/Help/helpcenter');
 app.use('/api/comments', commentRoutes);
 app.use('/api/books', bookRequestRoutes);
 app.use('/api/admin', adminRoutes);
@@ -29,6 +30,7 @@ app.use('/api/blogs', blogRoutes);
 app.use('/api/publications', publicationRoutes);
 app.use('/api/viewer', viewerRoutes);
 app.use('/api/public', pubroutes);
+app.use('/api/help', helpCenterRoutes);
 
 // Middleware to parse JSON
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));

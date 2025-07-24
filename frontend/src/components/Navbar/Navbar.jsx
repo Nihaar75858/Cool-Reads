@@ -91,14 +91,7 @@ const Navbar = () => {
                 />
               </>
             ) : (
-              <div className="text-center w-full">
-                <img
-                  src="/default-profile.png"
-                  alt="Default"
-                  className="w-12 h-12 mx-auto mb-2 rounded-full object-cover border border-gray-300"
-                />
-                <p className="text-gray-500">Guest User</p>
-              </div>
+              <div className="text-center w-full"></div>
             )}
           </div>
 
@@ -127,8 +120,8 @@ const Navbar = () => {
               </>
             )}
             <li>
-              <Link to="/settings" className="flex items-center gap-2 px-4 py-2 text-gray-800 rounded-md hover:bg-gray-300 transition">
-                <IoSettings /> Settings
+              <Link to="/helpcenter" className="flex items-center gap-2 px-4 py-2 text-gray-800 rounded-md hover:bg-gray-300 transition">
+                <IoSettings /> Help Center
               </Link>
             </li>
           </ul>

@@ -9,6 +9,7 @@ import Profile from './components/Profile/Profile';
 import About from './pages/About/About';
 import PubBlogs from './pages/Public/PubBlog/PubBlogs';
 import PubBooks from './pages/Public/PubBooks/PubBooks';
+import HelpCenter from './components/HelpCenter/HelpCenter';
 
 // Blog
 import CreateBlog from './pages/Blog/CreateBlog/CreateBlog';
@@ -53,6 +54,7 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path='/pubbooks' element={<PubBooks />} />
         <Route path="/publicblogs" element={<PubBlogs />} />
+        <Route path="/helpcenter" element={<HelpCenter />} />
         
         {/* Dashboard */}
 

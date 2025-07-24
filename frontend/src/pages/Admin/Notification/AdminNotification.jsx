@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useUser } from '../../../components/Context/UserContext';
+import axios from 'axios';
 
 const AdminNotification = () => {
   const { user } = useUser();
   const [notifications, setNotifications] = useState([]);
+  const [replies, setReplies] = useState({}); // store reply text for each note
 
   useEffect(() => {
     const fetchNotifications = async () => {
-      if (!user?._id) return;
-      const res = await fetch(`http://localhost:5000/api/notifications/${user._id}`);
+      const res = await fetch(`http://localhost:5000/api/admin/help`);
       const data = await res.json();
       setNotifications(data);
     };
@@ -16,17 +17,62 @@ const AdminNotification = () => {
     fetchNotifications();
   }, [user]);
 
+  const handleReplyChange = (id, value) => {
+    setReplies(prev => ({
+      ...prev,
+      [id]: value
+    }));
+  };
+
+  const handleSendReply = async (note) => {
+    try {
+      await axios.post(`http://localhost:5000/api/admin/help/reply`, {
+        requestId: note._id,
+        replyMessage: replies[note._id],
+        userId: note.userId // include only if the request has user info
+      });
+
+      alert('Reply sent!');
+      setReplies(prev => ({
+        ...prev,
+        [note._id]: ''
+      }));
+    } catch (err) {
+      console.error('Error sending reply:', err);
+      alert('Failed to send reply.');
+    }
+  };
+
   return (
     <div className="p-6">
-      <h1 className="text-2xl font-semibold mb-4">Notifications</h1>
+      <h1 className="text-2xl font-semibold mb-4">Help Center Notifications</h1>
       {notifications.length === 0 ? (
         <p>No notifications yet.</p>
       ) : (
-        <ul className="space-y-4">
+        <ul className="space-y-6">
           {notifications.map((note) => (
             <li key={note._id} className="bg-white p-4 shadow rounded">
-              <a href={note.link} className="text-blue-600 hover:underline">{note.message}</a>
-              <p className="text-sm text-gray-500">{new Date(note.createdAt).toLocaleString()}</p>
+              <p className="font-bold">Subject: {note.subject}</p>
+              <p className="text-gray-700">From: {note.name ? note.name : 'Anonymous'}</p>
+              <p className="mb-2">{note.message}</p>
+              <p className="text-sm text-gray-500">{new Date(note.date).toLocaleString()}</p>
+
+              {/* Reply Section */}
+              <div className="mt-4">
+                <textarea
+                  rows="2"
+                  placeholder="Write your reply..."
+                  value={replies[note._id] || ''}
+                  onChange={(e) => handleReplyChange(note._id, e.target.value)}
+                  className="w-full border border-gray-300 p-2 rounded mb-2"
+                ></textarea>
+                <button
+                  onClick={() => handleSendReply(note)}
+                  className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+                >
+                  Send Reply
+                </button>
+              </div>
             </li>
           ))}
         </ul>
