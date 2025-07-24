@@ -4,7 +4,7 @@ const HelpRequest = require('../../models/Help'); // Adjust the path as necessar
 
 router.post('/', async (req, res) => {
   try {
-    const { name, email, subject, message } = req.body;
+    const { name, email, subject, message, userId } = req.body;
 
     // Store it in your DB — maybe in a HelpRequest model:
     const helpRequest = new HelpRequest({
@@ -13,7 +13,8 @@ router.post('/', async (req, res) => {
       subject,
       message,
       date: new Date(),
-      read: false
+      read: false,
+      userId
     });
 
     await helpRequest.save();

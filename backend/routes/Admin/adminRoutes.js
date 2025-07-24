@@ -136,4 +136,36 @@ router.get('/help', async (req, res) => {
   }
 });
 
+router.post('/help/reply', async (req, res) => {
+  const { requestId, replyMessage, userId } = req.body;
+  try {
+    const helpRequest = await HelpRequest.findById(requestId);
+    if (!helpRequest) {
+      return res.status(404).json({ error: 'Help request not found' });
+    }
+
+    // Create a reply notification
+    const replyNotification = new Notification({
+      type: 'Help Reply',
+      message: replyMessage,
+      recipientRole: 'Author', // Include user ID if available
+      authorId: userId,
+      read: false,
+      date: new Date(),
+      status: 'Replied',
+    });
+
+    await replyNotification.save();
+
+    // Update the help request with the reply
+    helpRequest.reply = replyMessage;
+    helpRequest.replyDate = new Date();
+    await helpRequest.save();
+
+    res.json({ message: 'Reply sent successfully', notification: replyNotification });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 module.exports = router;

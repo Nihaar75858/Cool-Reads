@@ -5,8 +5,9 @@ const helpRequestSchema = new mongoose.Schema({
   email: String,
   subject: String,
   message: String,
-  date: Date,
-  read: Boolean
+  date: { type: Date, default: Date.now },
+  read: { type: Boolean, default: false },
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'Users', default: null }
 });
 
 module.exports = mongoose.model('HelpRequest', helpRequestSchema);

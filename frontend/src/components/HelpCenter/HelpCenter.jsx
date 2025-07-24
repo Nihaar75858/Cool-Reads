@@ -29,6 +29,7 @@ const HelpCenter = () => {
             ...formData,
             name: user ? user.firstName + " " + user.lastName : 'Anonymous',
             email: user ? user.email : 'Anonymous',
+            userId: user ? user.id : null, // Include user ID if available
         };
 
         try {

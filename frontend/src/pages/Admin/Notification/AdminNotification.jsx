@@ -11,6 +11,7 @@ const AdminNotification = () => {
     const fetchNotifications = async () => {
       const res = await fetch(`http://localhost:5000/api/admin/help`);
       const data = await res.json();
+      console.log(data);
       setNotifications(data);
     };
 
@@ -26,7 +27,7 @@ const AdminNotification = () => {
 
   const handleSendReply = async (note) => {
     try {
-      await axios.post(`http://localhost:5000/api/admin/help/reply`, {
+      await axios.post('http://localhost:5000/api/admin/help/reply', {
         requestId: note._id,
         replyMessage: replies[note._id],
         userId: note.userId // include only if the request has user info
@@ -44,14 +45,14 @@ const AdminNotification = () => {
   };
 
   return (
-    <div className="p-6">
+    <div className="p-6 bg-custombg min-h-screen">
       <h1 className="text-2xl font-semibold mb-4">Help Center Notifications</h1>
       {notifications.length === 0 ? (
         <p>No notifications yet.</p>
       ) : (
         <ul className="space-y-6">
           {notifications.map((note) => (
-            <li key={note._id} className="bg-white p-4 shadow rounded">
+            <li key={note._id} className="bg-navtext p-4 shadow rounded">
               <p className="font-bold">Subject: {note.subject}</p>
               <p className="text-gray-700">From: {note.name ? note.name : 'Anonymous'}</p>
               <p className="mb-2">{note.message}</p>
