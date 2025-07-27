@@ -9,7 +9,7 @@ const notificationSchema = new mongoose.Schema({
   authorId: { type: mongoose.Schema.Types.ObjectId, ref: 'Users' },
   read: { type: Boolean, default: false },
   date: { type: Date, default: Date.now },
-  status: { type: String, enum: ['Published', 'Rejected', 'Pending', 'Replied'], default: 'Pending' },
+  status: { type: String, enum: ['Published', 'Rejected', 'Pending', 'Replied'], default: 'Pending', required: false },
 });
 
 module.exports = mongoose.model('Notification', notificationSchema);

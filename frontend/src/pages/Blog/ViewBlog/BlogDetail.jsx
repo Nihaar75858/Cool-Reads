@@ -3,14 +3,30 @@ import { useParams } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import rehypeSlug from 'rehype-slug';
 import remarkGfm from 'remark-gfm';
+import { useUser } from '../../../components/Context/UserContext';
 
 const BlogDetail = () => {
+    const { user } = useUser();
     const { id } = useParams();
+    const [commenterId, setCommenterId] = useState('');
+    const [blogAuthorRole, setBlogAuthorRole] = useState('');
+    const [name, setName] = useState('');
     const [blog, setBlog] = useState(null);
     const [headings, setHeadings] = useState([]);
     const [comment, setComment] = useState('');
     const [allComments, setAllComments] = useState([]);
     const [isSubmitting, setIsSubmitting] = useState(false);
+
+    useEffect(() => {
+        if (user) {
+            setCommenterId(user.id);
+            setName(user.firstName + " " + user.lastName);
+            console.log("Blog User ID:", user.id);
+            console.log("User Name:", user.firstName + " " + user.lastName);
+        } else {
+            console.error("User not found in context");
+        }
+    }, [user]);
 
     useEffect(() => {
         const fetchBlog = async () => {
@@ -19,6 +35,12 @@ const BlogDetail = () => {
                 const data = await res.json();
                 setBlog(data);
                 extractHeadings(data.content);
+                if (data.authorId) {
+                    const authorRes = await fetch(`http://localhost:5000/api/users/${data.authorId}`);
+                    const authorData = await authorRes.json();
+                    console.log("Author Data:", authorData);
+                    setBlogAuthorRole(authorData.role);
+                }
             } catch (err) {
                 console.error('Failed to fetch blog:', err);
             }
@@ -68,19 +90,25 @@ const BlogDetail = () => {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    content: comment.trim(),
                     blogId: id,
+                    commenterId: commenterId,
+                    content: comment.trim(),
+                    recipientRole: blogAuthorRole,
+                    authorName: name
                 }),
             });
 
-            if (!res.ok) throw new Error('Failed to submit comment');
+            if (!res.ok) {
+                const errorData = await res.json();
+                throw new Error(errorData.message || 'Failed to submit comment');
+            }
 
             const newComment = await res.json();
             setAllComments([newComment, ...allComments]);
             setComment('');
         } catch (err) {
-            console.error(err);
-            alert('Failed to submit comment.');
+            console.error('Comment submission error:', err);
+            alert(`Failed to submit comment: ${err.message}`);
         } finally {
             setIsSubmitting(false);
         }
@@ -89,9 +117,9 @@ const BlogDetail = () => {
     if (!blog) return <div className="p-6">Loading...</div>;
 
     return (
-        <div className="flex min-h-screen">
+        <div className="flex min-h-screen bg-custombg">
             {/* Sidebar */}
-            <aside className="w-1/4 p-4 border-r border-gray-300 sticky top-0 h-screen overflow-y-auto bg-gray-50">
+            <aside className="w-1/4 p-4 border-4 border-orange-900 sticky top-0 h-screen overflow-y-auto bg-custombg">
                 <h2 className="text-lg font-bold mb-3">Contents</h2>
                 {headings.length > 0 ? (
                     <ul className="text-sm space-y-2">
@@ -109,9 +137,15 @@ const BlogDetail = () => {
             </aside>
 
             {/* Main content */}
-            <main className="w-3/4 p-6 bg-white overflow-y-auto">
+            <main className="w-3/4 p-6 bg-custombg overflow-y-auto">
                 <h1 className="text-3xl font-bold mb-2">{blog.title}</h1>
-                <p className="text-gray-600 mb-6">By {blog.author}</p>
+                <p className="text-gray-600 mb-6">By {blog.author} | {new Date(blog.createdAt).toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                })} </p>
 
                 <ReactMarkdown
                     children={blog.content}
@@ -146,9 +180,8 @@ const BlogDetail = () => {
                     <button
                         onClick={handleCommentSubmit}
                         disabled={isSubmitting}
-                        className={`px-4 py-2 rounded text-white ${
-                            isSubmitting ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700'
-                        }`}
+                        className={`px-4 py-2 rounded text-white ${isSubmitting ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700'
+                            }`}
                     >
                         {isSubmitting ? 'Submitting...' : 'Submit'}
                     </button>
@@ -156,7 +189,7 @@ const BlogDetail = () => {
                     <div className="mt-6 space-y-4">
                         {allComments.length > 0 ? (
                             allComments.map((c) => (
-                                <div key={c.id} className="p-4 bg-gray-100 rounded">
+                                <div key={c._id || c.id} className="p-4 bg-gray-100 rounded">
                                     <p>{c.content}</p>
                                     {c.createdAt && (
                                         <p className="text-xs text-gray-500 mt-2">

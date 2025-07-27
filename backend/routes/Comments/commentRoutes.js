@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Comment = require('./../../models/Comment');
 const Blog = require('./../../models/Blog'); // Assuming you have a Blog model
-const User = require('./../../models/Users'); // Assuming you have a User model
+const Notification = require('./../../models/Notification');
 
 // GET comments for a blog
 router.get('/:blogId', async (req, res) => {
@@ -15,32 +15,41 @@ router.get('/:blogId', async (req, res) => {
 });
 
 // POST a new comment
-router.post('/:blogId', async (req, res) => {
+router.post('/:id', async (req, res) => {
     try {
-        const { blogId, content, commenterId } = req.body;
+        const blogId = req.params.id; // Get blogId from URL parameter
+        const { content, commenterId, recipientRole, authorName } = req.body;
+
+        // Validate required fields
+        if (!content || !commenterId) {
+            return res.status(400).json({ message: "Content and commenterId are required" });
+        }
 
         const blog = await Blog.findById(blogId);
         if (!blog) return res.status(404).json({ message: "Blog not found" });
 
+        // Create comment (this already saves to database, no need for .save())
         const comment = await Comment.create({
-            blogId,
-            content,
+            blogId: blogId,
             commenter: commenterId,
-            blogAuthor: blog.authorId, // assuming the blog has this field
+            content,
         });
 
         // Save a notification for the author
         await Notification.create({
-            userId: blog.authorId,
-            message: `${req.user.firstName} just commented on your blog "${blog.title}"`,
-            link: `/blog/${blogId}`,
-            isRead: false,
+            type: 'Comment',
+            message: `${authorName} just commented on your blog "${blog.title}"`,
+            recipientRole,
+            authorId: blog.authorId, // Use blog.authorId, not blog.id
+            read: false,
+            date: new Date(),
         });
 
-        const savedComment = await comment.save();
-        res.status(201).json(savedComment);
+        // Return the comment, not the notification
+        res.status(201).json(comment);
     } catch (err) {
-        res.status(400).json({ message: err.message });
+        console.error('Comment creation error:', err);
+        res.status(500).json({ message: err.message });
     }
 });
 
