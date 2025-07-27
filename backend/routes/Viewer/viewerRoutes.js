@@ -45,4 +45,13 @@ router.post('/clone/:bookId', async (req, res) => {
   }
 });
 
+router.get('/notifs/:id', async (req, res) => {
+  try {
+    const notifications = await Notification.find({ recipientRole: 'Viewer' });
+    res.json(notifications);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 module.exports = router;

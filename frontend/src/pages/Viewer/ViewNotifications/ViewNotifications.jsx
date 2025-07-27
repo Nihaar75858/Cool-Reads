@@ -2,16 +2,16 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useUser } from '../../../components/Context/UserContext';
 
-const AuthorNotifications = () => {
+const ViewNotifications = () => {
   const { user } = useUser();
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchAuthorNotifications = async () => {
+    const fetchViewerNotifications = async () => {
       // if (!user?._id) return;
       try {
-        const response = await axios.get(`http://localhost:5000/api/books/author/notifs/${user.id}`);
+        const response = await axios.get(`http://localhost:5000/api/books/viewer/notifs/${user._id}`);
         setBooks(response.data);
         console.log("Fetched books:", response.data);
       } catch (error) {
@@ -21,7 +21,7 @@ const AuthorNotifications = () => {
       }
     };
 
-    fetchAuthorNotifications();
+    fetchViewerNotifications();
   }, [user]);
 
   const getStatusColor = (status) => {
@@ -46,7 +46,7 @@ const AuthorNotifications = () => {
         {loading ? (
           <p className="text-gray-600">Loading notifications...</p>
         ) : books.length === 0 ? (
-          <p className="text-gray-600">No notifications yet.</p>
+          <p className="text-gray-600">No responses found yet.</p>
         ) : (
           <ul className="space-y-4">
             {books.map((book) => (
@@ -68,4 +68,4 @@ const AuthorNotifications = () => {
   );
 };
 
-export default AuthorNotifications;
+export default ViewNotifications;

@@ -1,19 +1,14 @@
 import React, { useState, useEffect } from 'react';
+import { useUser } from '../../../components/Context/UserContext';
 
 const ViewBook = () => {
-    const [viewerName, setViewerName] = useState('');
+    const { user } = useUser();
     const [searchQuery, setSearchQuery] = useState('');
     const [books, setBooks] = useState([]);
     const [filteredBooks, setFilteredBooks] = useState([]);
-    const [notifications, setNotifications] = useState([]);
 
     useEffect(() => {
-        const storedUser = JSON.parse(localStorage.getItem('user'));
-        if (storedUser) {
-            setViewerName(storedUser.firstName);
-            console.log("Viewer Name:", storedUser.firstName);
-            fetchBooks(); // No user ID passed here
-        }
+        fetchBooks();
     }, []);
 
     const fetchBooks = async () => {
@@ -30,17 +25,15 @@ const ViewBook = () => {
 
     const handleAddToCollection = async (bookId) => {
         try {
-            const token = localStorage.getItem('token'); // ensure user is logged in
-            console.log("Token:", token);
-            if (!token) {
+            if (!user._id) {
                 alert("You must be logged in to add books.");
                 return;
             }
 
-            const res = await fetch(`http://localhost:5000/api/books/clone/${bookId}`, {
+            const res = await fetch(`http://localhost:5000/api/books/${user._id}/clone/${bookId}`, {
                 method: 'POST',
                 headers: {
-                    'Authorization': `Bearer ${token}`,
+                    'Authorization': `Bearer ${user._id}`,
                     'Content-Type': 'application/json'
                 }
             });

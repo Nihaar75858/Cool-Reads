@@ -22,7 +22,7 @@ const ViewerDashboard = () => {
       const data = await res.json();
 
       // Only show accepted books
-      const acceptedBooks = data.filter(book => book.status === 'accepted');
+      const acceptedBooks = data.filter(book => book.status === 'published');
       setBooks(acceptedBooks);
       setFilteredBooks(acceptedBooks);
     } catch (err) {
@@ -81,26 +81,6 @@ const ViewerDashboard = () => {
           ))}
           {filteredBooks.length === 0 && (
             <p className="text-gray-600 col-span-full">Add some books to find them here!.</p>
-          )}
-        </div>
-      </section>
-
-      {/* Notifications Section */}
-      <section>
-        <h2 className="text-2xl font-semibold mb-4">Notifications</h2>
-        <div className="space-y-4">
-          {notifications.length === 0 ? (
-            <p className="text-gray-600">No notifications yet.</p>
-          ) : (
-            notifications.map((note, idx) => (
-              <div key={idx} className="bg-white p-4 rounded shadow-md">
-                <p className="text-lg font-medium mb-2">{note.title}</p>
-                <p className="text-gray-700">{note.message}</p>
-                <p className="text-sm text-gray-500 mt-2">
-                  {new Date(note.date).toLocaleString()}
-                </p>
-              </div>
-            ))
           )}
         </div>
       </section>

@@ -35,7 +35,7 @@ const NavigationConfig = {
     3: [ // Viewer
         { name: "Home", to: "/viewer/viewerdashboard", submenus: null },
         { name: "Books", to: "/viewer/viewbooks", submenus: null },
-        { name: "Notifications", to: "/viewer/notifications", submenus: null },
+        { name: "Notifications", to: "/viewer/viewnotifications", submenus: null },
         {
             name: "Blogs", submenus: [
                 { name: "Create Blog", to: "/createblog" },

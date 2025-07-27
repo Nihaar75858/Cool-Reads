@@ -1,6 +1,7 @@
 import './App.css';
 import { useState, useEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
+import { useUser } from './components/Context/UserContext';
 import Dashboard from './pages/DashBoard/Dashboard';
 import Login from './pages/Auth/Login';
 import Register from './pages/Auth/Register';
@@ -32,9 +33,11 @@ import ModifyPublications from './pages/Admin/Publishing/ModifyPublications';
 // Viewer
 import ViewerDashboard from './pages/DashBoard/ViewerDashboard';
 import ViewBook from './pages/Viewer/ViewBooks/ViewBook';
+import ViewNotifications from './pages/Viewer/ViewNotifications/ViewNotifications';
+
 
 function App() {
-  const [user, setUser] = useState(null);
+  const { user } = useUser();
   const token = localStorage.getItem('token');
   const location = useLocation();
 
@@ -77,8 +80,9 @@ function App() {
         <Route path="/admin/modifybook/:id" element={<ModifyPublications />} />
 
         // Viewer
-        <Route path="/viewerdashboard" element={<ViewerDashboard user={user} />} />
-        <Route path="/viewbooks" element={<ViewBook />} />
+        <Route path="/viewer/viewerdashboard" element={<ViewerDashboard user={user} />} />
+        <Route path="/viewer/viewbooks" element={<ViewBook />} />
+        <Route path="/viewer/viewnotifications" element={<ViewNotifications />} />
 
         {/* Fallback route for 404 */}
       </Routes>
