@@ -43,6 +43,7 @@ router.post('/:id', async (req, res) => {
             authorId: blog.authorId, // Use blog.authorId, not blog.id
             read: false,
             date: new Date(),
+            status: 'Commented',
         });
 
         // Return the comment, not the notification

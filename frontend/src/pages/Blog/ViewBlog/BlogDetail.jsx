@@ -34,9 +34,10 @@ const BlogDetail = () => {
                 const res = await fetch(`http://localhost:5000/api/blogs/${id}`);
                 const data = await res.json();
                 setBlog(data);
+                console.log("Blog Data:", data.authorId);
                 extractHeadings(data.content);
                 if (data.authorId) {
-                    const authorRes = await fetch(`http://localhost:5000/api/users/${data.authorId}`);
+                    const authorRes = await fetch(`http://localhost:5000/api/userdata/${data.authorId}`);
                     const authorData = await authorRes.json();
                     console.log("Author Data:", authorData);
                     setBlogAuthorRole(authorData.role);
