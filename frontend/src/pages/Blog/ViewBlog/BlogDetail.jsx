@@ -4,6 +4,7 @@ import ReactMarkdown from 'react-markdown';
 import rehypeSlug from 'rehype-slug';
 import remarkGfm from 'remark-gfm';
 import { useUser } from '../../../components/Context/UserContext';
+import { API_BASE } from '../../../components/Config/config';
 
 const BlogDetail = () => {
     const { user } = useUser();
@@ -31,13 +32,13 @@ const BlogDetail = () => {
     useEffect(() => {
         const fetchBlog = async () => {
             try {
-                const res = await fetch(`http://localhost:5000/api/blogs/${id}`);
+                const res = await fetch(`${API_BASE}/api/blogs/${id}`);
                 const data = await res.json();
                 setBlog(data);
                 console.log("Blog Data:", data.authorId);
                 extractHeadings(data.content);
                 if (data.authorId) {
-                    const authorRes = await fetch(`http://localhost:5000/api/userdata/${data.authorId}`);
+                    const authorRes = await fetch(`${API_BASE}/api/userdata/${data.authorId}`);
                     const authorData = await authorRes.json();
                     console.log("Author Data:", authorData);
                     setBlogAuthorRole(authorData.role);
@@ -49,7 +50,7 @@ const BlogDetail = () => {
 
         const fetchComments = async () => {
             try {
-                const res = await fetch(`http://localhost:5000/api/comments/${id}`);
+                const res = await fetch(`${API_BASE}/api/comments/${id}`);
                 const data = await res.json();
                 setAllComments(data.reverse());
             } catch (err) {
@@ -85,7 +86,7 @@ const BlogDetail = () => {
         setIsSubmitting(true);
 
         try {
-            const res = await fetch(`http://localhost:5000/api/comments/${id}`, {
+            const res = await fetch(`${API_BASE}/api/comments/${id}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -3,6 +3,7 @@ import axios from 'axios'; // Install axios if you don't have: npm install axios
 import { useNavigate } from 'react-router-dom';
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
+import { API_BASE } from '../../components/Config/config';
 
 const Register = () => {
   const [email, setEmail] = useState('');
@@ -26,7 +27,7 @@ const Register = () => {
     }
 
     try {
-      const res = await axios.post('http://localhost:5000/api/users/register', {
+      const res = await axios.post(`${API_BASE}/api/users/register`, {
         firstName,
         lastName,
         email,

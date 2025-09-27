@@ -4,7 +4,8 @@ import Select from 'react-select'
 import { useUser } from '../../../components/Context/UserContext';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
-import genresList from '../../../components/Genres/Genres'; // Importing the genres list
+import genresList from '../../../components/Genres/Genres';
+import { API_BASE } from '../../../components/Config/config';
 
 const AddBook = () => {
   const [bookName, setBookName] = useState('');
@@ -80,7 +81,7 @@ const AddBook = () => {
     console.log("FormData ready to send");
 
     try {
-      const res = await axios.post('http://localhost:5000/api/books/request', formData, {
+      const res = await axios.post(`${API_BASE}/api/books/request`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

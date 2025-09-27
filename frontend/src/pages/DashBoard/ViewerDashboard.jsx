@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { API_BASE } from '../../components/Config/config';
 
 const ViewerDashboard = () => {
   const [viewerName, setViewerName] = useState('');
@@ -18,7 +19,7 @@ const ViewerDashboard = () => {
 
   const fetchBooks = async () => {
     try {
-      const res = await fetch(`http://localhost:5000/api/books`);
+      const res = await fetch(`${API_BASE}/api/books`);
       const data = await res.json();
 
       // Only show accepted books
@@ -33,7 +34,7 @@ const ViewerDashboard = () => {
 
   const fetchNotifications = async (userId) => {
     try {
-      const res = await fetch(`http://localhost:5000/api/blogs/notifications/${userId}`);
+      const res = await fetch(`${API_BASE}/api/blogs/notifications/${userId}`);
       const data = await res.json();
       setNotifications(data);
     } catch (err) {
@@ -70,7 +71,7 @@ const ViewerDashboard = () => {
             <div key={book._id} className="bg-white p-6 rounded-lg shadow-md">
               {book.bookCover && (
                 <img
-                  src={`http://localhost:5000/${book.bookCover}`}
+                  src={`${API_BASE}/${book.bookCover}`}
                   alt="Book Cover"
                   className="w-full h-48 object-cover rounded-md mb-4"
                 />

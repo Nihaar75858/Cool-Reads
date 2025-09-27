@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { API_BASE } from "../../components/Config/config";
 
 const AdminDashboard = () => {
   const [userCount, setUserCount] = useState(0);
@@ -15,10 +16,10 @@ const AdminDashboard = () => {
   const fetchCounts = async () => {
     try {
       const [usersRes, booksRes, blogsRes, notifications] = await Promise.all([
-        axios.get(`http://localhost:5000/api/admin/users`),
-        axios.get(`http://localhost:5000/api/admin/bookcount`),
-        axios.get(`http://localhost:5000/api/admin/blogcount`),
-        axios.get(`http://localhost:5000/api/admin/notifs`)
+        axios.get(`${API_BASE}/api/admin/users`),
+        axios.get(`${API_BASE}/api/admin/bookcount`),
+        axios.get(`${API_BASE}/api/admin/blogcount`),
+        axios.get(`${API_BASE}/api/admin/notifs`)
       ]);
 
       // Log responses for debugging

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useUser } from '../../../components/Context/UserContext';
+import { API_BASE } from '../../../components/Config/config';
 
 const ViewBook = () => {
     const { user } = useUser();
@@ -13,7 +14,7 @@ const ViewBook = () => {
 
     const fetchBooks = async () => {
         try {
-            const res = await fetch(`http://localhost:5000/api/viewer/books`);
+            const res = await fetch(`${API_BASE}/api/viewer/books`);
             const data = await res.json();
 
             setBooks(data);
@@ -30,7 +31,7 @@ const ViewBook = () => {
                 return;
             }
 
-            const res = await fetch(`http://localhost:5000/api/books/${user._id}/clone/${bookId}`, {
+            const res = await fetch(`${API_BASE}/api/books/${user._id}/clone/${bookId}`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${user._id}`,
@@ -80,7 +81,7 @@ const ViewBook = () => {
                         <div key={book._id} className="bg-white p-6 rounded-lg shadow-md">
                             {book.bookCover && (
                                 <img
-                                    src={`http://localhost:5000/${book.bookCover}`}
+                                    src={`${API_BASE}/${book.bookCover}`}
                                     alt="Book Cover"
                                     className="w-full h-48 object-cover rounded-md mb-4"
                                 />

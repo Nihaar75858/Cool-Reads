@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { API_BASE } from '../../components/Config/config';
 
 const AuthorDashboard = () => {
     const [authorName, setAuthorName] = useState('');
@@ -17,7 +18,7 @@ const AuthorDashboard = () => {
 
     const fetchBooks = async (authorId) => {
         try {
-            const res = await fetch(`http://localhost:5000/api/books/author/${authorId}`);
+            const res = await fetch(`${API_BASE}/api/books/author/${authorId}`);
             const data = await res.json();
 
             const acceptedBooks = data.filter(book => book.status === 'accepted');
@@ -61,7 +62,7 @@ const AuthorDashboard = () => {
                             {/* Book Cover Image */}
                             {book.bookCover && (
                                 <img
-                                    src={`http://localhost:5000/${book.bookCover}`} // Adjust if you use a different static path
+                                    src={`${API_BASE}/${book.bookCover}`} // Adjust if you use a different static path
                                     alt="Book Cover"
                                     className="w-full h-48 object-cover rounded-md mb-4"
                                 />

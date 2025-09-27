@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useUser } from '../../../components/Context/UserContext';
 import axios from 'axios';
+import { API_BASE } from '../../../components/Config/config';
 
 const AdminNotification = () => {
   const { user } = useUser();
@@ -9,7 +10,7 @@ const AdminNotification = () => {
 
   useEffect(() => {
     const fetchNotifications = async () => {
-      const res = await fetch(`http://localhost:5000/api/admin/help`);
+      const res = await fetch(`${API_BASE}/api/admin/help`);
       const data = await res.json();
       console.log(data);
       setNotifications(data);
@@ -27,7 +28,7 @@ const AdminNotification = () => {
 
   const handleSendReply = async (note) => {
     try {
-      await axios.post('http://localhost:5000/api/admin/help/reply', {
+      await axios.post(`${API_BASE}/api/admin/help/reply`, {
         requestId: note._id,
         replyMessage: replies[note._id],
         userId: note.userId // include only if the request has user info

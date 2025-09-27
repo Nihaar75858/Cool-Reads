@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { API_BASE } from '../../../components/Config/config';
 
 const BookRequestDetail = () => {
   const { id } = useParams();
@@ -8,7 +9,7 @@ const BookRequestDetail = () => {
   const [book, setBook] = useState(null);
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/admin/request')
+    axios.get(`${API_BASE}/api/admin/request`)
       .then(res => {
         const found = res.data.find(b => b._id === id);
         if (found) setBook(found);
@@ -19,7 +20,7 @@ const BookRequestDetail = () => {
 
   const handleAccept = async () => {
     try {
-      await axios.put(`http://localhost:5000/api/admin/accept/${id}`);
+      await axios.put(`${API_BASE}/api/admin/accept/${id}`);
       alert("Book accepted successfully");
       navigate('/admin/viewpublications');
     } catch (err) {
@@ -38,7 +39,7 @@ const BookRequestDetail = () => {
         {book.bookCover && (
           <div className="my-4 items-center flex justify-center">
             <img
-              src={`http://localhost:5000/${book.bookCover}`}
+              src={`${API_BASE}/${book.bookCover}`}
               alt="Book Cover"
               className="max-w-xs rounded"
             />
@@ -73,7 +74,7 @@ const BookRequestDetail = () => {
         {book.bookDocument && (
           <div className="mb-4">
             <a
-              href={`http://localhost:5000/${book.bookDocument}`}
+              href={`${API_BASE}/${book.bookDocument}`}
               target="_blank"
               rel="noopener noreferrer"
               className="underline text-blue-300"

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { API_BASE } from '../../../components/Config/config';
 
 const ModifyPublications = () => {
   const { id } = useParams();
@@ -8,7 +9,7 @@ const ModifyPublications = () => {
   const [book, setBook] = useState(null);
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/publications/view')
+    axios.get(`${API_BASE}/api/publications/view`)
       .then(res => {
         const found = res.data.find(b => b._id === id);
         if (found) setBook(found);
@@ -25,7 +26,7 @@ const ModifyPublications = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:5000/api/publications/accept/${id}`, book);
+      await axios.put(`${API_BASE}/api/publications/accept/${id}`, book);
       alert("Book updated successfully");
       navigate('/admin/reviewpublication');
     } catch (err) {

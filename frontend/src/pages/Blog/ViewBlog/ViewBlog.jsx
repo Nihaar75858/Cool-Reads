@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { API_BASE } from '../../../components/Config/config';
 
 const ViewBlogs = () => {
   const [blogs, setBlogs] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/blogs')
+    axios.get(`${API_BASE}/api/blogs`)
       .then(res => setBlogs(res.data))
       .catch(err => console.error(err));
   }, []);
@@ -16,7 +17,7 @@ const ViewBlogs = () => {
     if (!confirmDelete) return;
 
     try {
-      await axios.delete(`http://localhost:5000/api/blogs/${id}`);
+      await axios.delete(`${API_BASE}/api/blogs/${id}`);
       setBlogs(prev => prev.filter(blog => blog._id !== id));
     } catch (err) {
       console.error("Failed to delete blog:", err);

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { CgProfile } from 'react-icons/cg';
+import { API_BASE } from '../Config/config';
 
 const Profile = () => {
     const [email, setEmail] = useState('');
@@ -45,7 +46,7 @@ const Profile = () => {
 
         try {
             const userId = localStorage.getItem('userId');
-            const res = await axios.put(`http://localhost:5000/api/user/update/${userId}`, {
+            const res = await axios.put(`${API_BASE}/api/user/update/${userId}`, {
                 firstName,
                 lastName,
                 email,

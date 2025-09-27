@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useUser } from '../../../components/Context/UserContext';
+import { API_BASE } from '../../../components/Config/config';
 
 const AuthorNotifications = () => {
   const { user } = useUser();
@@ -11,7 +12,7 @@ const AuthorNotifications = () => {
     const fetchAuthorNotifications = async () => {
       // if (!user?._id) return;
       try {
-        const response = await axios.get(`http://localhost:5000/api/books/author/notifs/${user.id}`);
+        const response = await axios.get(`${API_BASE}/api/books/author/notifs/${user.id}`);
         setBooks(response.data);
         console.log("Fetched books:", response.data);
       } catch (error) {

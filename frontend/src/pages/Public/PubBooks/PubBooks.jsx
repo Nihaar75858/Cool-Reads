@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import genresList from '../../../components/Genres/Genres'; // Importing the genres list
+import { API_BASE } from '../../../components/Config/config';
 
 const PubBooks = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -11,7 +12,7 @@ const PubBooks = () => {
   useEffect(() => {
     const fetchPublicBooks = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/public/pubbooks');
+        const res = await axios.get(`${API_BASE}/api/public/pubbooks`);
         const publishedBooks = res.data.filter(book => book.status === 'published');
         setBooks(publishedBooks);
         console.log('Fetched books:', publishedBooks);
@@ -101,7 +102,7 @@ const PubBooks = () => {
               >
                 {book.bookCover && (
                   <img
-                    src={`http://localhost:5000/${book.bookCover}`}
+                    src={`${API_BASE}/${book.bookCover}`}
                     alt="Book Cover"
                     className="w-full h-48 object-cover rounded-md mb-4"
                   />

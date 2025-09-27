@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useUser } from '../../../components/Context/UserContext';
+import { API_BASE } from '../../../components/Config/config';
 
 const CreateBlog = () => {
   const [authorFirstName, setAuthorFirstName] = useState('');
@@ -48,7 +49,7 @@ const CreateBlog = () => {
         authorId: authorId // ✅ send MongoDB ObjectId of the author
       };
 
-      await axios.post('http://localhost:5000/api/blogs', payload);
+      await axios.post(`${API_BASE}/api/blogs`, payload);
       alert('Blog created!');
       setFormData({ title: '', content: '' });
       navigate('/viewblogs');

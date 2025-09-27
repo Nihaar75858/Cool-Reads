@@ -1,5 +1,6 @@
 // src/components/Context/UserContext.js
 import React, { createContext, useContext, useEffect, useState } from 'react';
+import { API_BASE } from '../Config/config';
 
 const UserContext = createContext();
 
@@ -23,7 +24,7 @@ export const UserProvider = ({ children }) => {
       }
 
       try {
-        const res = await fetch(`http://localhost:5000/api/userdata/${userId}`);
+        const res = await fetch(`${API_BASE}/api/userdata/${userId}`);
         if (!res.ok) throw new Error("Network response was not ok");
 
         const data = await res.json();

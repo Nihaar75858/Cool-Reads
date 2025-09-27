@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { API_BASE } from '../../../components/Config/config';
 
 const ViewPublication = () => {
   const [requests, setRequests] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/admin/request')
+    axios.get(`${API_BASE}/api/admin/request`)
       .then(res => setRequests(res.data))
       .catch(err => console.error(err));
   }, []);

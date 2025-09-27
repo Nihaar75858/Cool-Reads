@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useUser } from '../Context/UserContext';
+import { API_BASE } from '../Config/config';
 
 const HelpCenter = () => {
     const { user } = useUser();
@@ -33,7 +34,7 @@ const HelpCenter = () => {
         };
 
         try {
-            await axios.post('http://localhost:5000/api/help/', payload);
+            await axios.post(`${API_BASE}/api/help/`, payload);
             setSubmitted(true);
             setFormData({ subject: '', message: '' });
         } catch (err) {
