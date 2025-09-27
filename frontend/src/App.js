@@ -34,13 +34,14 @@ import ModifyPublications from './pages/Admin/Publishing/ModifyPublications';
 import ViewerDashboard from './pages/DashBoard/ViewerDashboard';
 import ViewBook from './pages/Viewer/ViewBooks/ViewBook';
 import ViewNotifications from './pages/Viewer/ViewNotifications/ViewNotifications';
-
+import { fetchUsers } from "./test";
 
 function App() {
   const { user } = useUser();
   const token = localStorage.getItem('token');
   const location = useLocation();
 
+  fetchUsers().then(console.log);
 
   // List of paths where Navbar should NOT appear
   const hideNavbarPaths = ['/login', '/register'];
