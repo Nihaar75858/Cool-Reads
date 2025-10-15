@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { API_BASE } from '../../components/Config/config';
+import { API_BASE } from '../../../components/Config/config';
 
 const AuthorDashboard = () => {
     const [authorName, setAuthorName] = useState('');

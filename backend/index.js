@@ -24,7 +24,7 @@ const helpCenterRoutes = require('./routes/Help/helpcenter');
 app.use('/api/comments', commentRoutes);
 app.use('/api/books', bookRequestRoutes);
 app.use('/api/admin', adminRoutes);
-app.use('/api/users', validateRoute);
+app.use('/api/auth', validateRoute);
 app.use('/api/userdata', userRoutes);
 app.use('/api/blogs', blogRoutes);
 app.use('/api/publications', publicationRoutes);
