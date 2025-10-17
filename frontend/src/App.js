@@ -2,36 +2,36 @@ import "./App.css";
 import { useState, useEffect } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { useUser } from "./components/Context/UserContext";
-import Dashboard from "./pages/DashBoard/Dashboard";
+import PublicDashboard from "./pages/Public/PublicDashboard/PublicDashboard";
 import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
 import Navbar from "./components/Navbar/Navbar";
 import Profile from "./components/Profile/Profile";
-import About from "./pages/About/About";
+import About from "./pages/Public/About/About";
 import PubBlogs from "./pages/Public/PubBlog/PubBlogs";
 import PubBooks from "./pages/Public/PubBooks/PubBooks";
 import HelpCenter from "./components/HelpCenter/HelpCenter";
 
 // Blog
-import CreateBlog from "./pages/Blog/CreateBlog/CreateBlog";
-import ViewBlogs from "./pages/Blog/ViewBlog/ViewBlog";
-import BlogDetail from "./pages/Blog/ViewBlog/BlogDetail";
+import CreateBlog from "./components/Blog/CreateBlog/CreateBlog";
+import ViewBlogs from "./components/Blog/ViewBlog/ViewBlog";
+import BlogDetail from "./components/Blog/ViewBlog/BlogDetail";
 
 // Author
-import AuthorDashboard from "./pages/DashBoard/AuthorDashboard";
+import AuthorDashboard from "./pages/Author/AuthorDashboard/AuthorDashboard";
 import AddBook from "./pages/Author/AddBook/AddBook";
-import AuthorNotifications from "./pages/Author/Notifications/AuthorNotifications";
+import AuthorNotifications from "./pages/Author/AuthorNotifications/AuthorNotifications";
 
 // Admin
-import AdminNotification from "./pages/Admin/Notification/AdminNotification";
-import AdminDashboard from "./pages/DashBoard/AdminDashboard";
+import AdminNotification from "./pages/Admin/AdminNotification/AdminNotification";
+import AdminDashboard from "./pages/Admin/AdminDashboard/AdminDashboard";
 import BookRequestDetail from "./pages/Admin/Publishing/BookRequestDetail";
 import ViewPublication from "./pages/Admin/Publishing/ViewPublication";
 import ReviewPublication from "./pages/Admin/Publishing/ReviewPublication";
 import ModifyPublications from "./pages/Admin/Publishing/ModifyPublications";
 
 // Viewer
-import ViewerDashboard from "./pages/DashBoard/ViewerDashboard";
+import ViewerDashboard from "./pages/Viewer/ViewerDashboard/ViewerDashboard";
 import ViewBook from "./pages/Viewer/ViewBooks/ViewBook";
 import ViewNotifications from "./pages/Viewer/ViewNotifications/ViewNotifications";
 
@@ -69,7 +69,7 @@ function App() {
     <main className="overflow-hidden">
       {shouldShowNavbar && <Navbar user={user} />}
       <Routes>
-        <Route path="/" element={<Dashboard />} />
+        <Route path="/" element={<PublicDashboard />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/profile" element={<Profile />} />

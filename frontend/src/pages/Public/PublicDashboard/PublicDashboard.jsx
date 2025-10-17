@@ -2,7 +2,7 @@ import React from 'react'
 import { motion } from 'framer-motion';
 
 // Dashboard Component
-const Dashboard = () => {
+const PublicDashboard = () => {
   return (
     <div className="min-h-screen">
 
@@ -168,4 +168,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default PublicDashboard;
