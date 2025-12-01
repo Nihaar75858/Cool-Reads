@@ -7,7 +7,7 @@ A comprehensive full-stack web application for book management, publishing, and 
 [![MongoDB](https://img.shields.io/badge/MongoDB-Database-47A248?logo=mongodb)](https://www.mongodb.com/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-CSS-38B2AC?logo=tailwind-css)](https://tailwindcss.com/)
 
-## 🌟 Features
+## Features
 
 ### For Readers (Viewers)
 
@@ -34,7 +34,7 @@ A comprehensive full-stack web application for book management, publishing, and 
 - **Notification System**: Track and manage all platform notifications
 - **Analytics Dashboard**: Monitor platform activity and engagement
 
-## 🏗️ Architecture
+## Architecture
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -70,7 +70,7 @@ A comprehensive full-stack web application for book management, publishing, and 
 └─────────────────────────────────────────────────────────────┘
 ```
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 
@@ -150,7 +150,7 @@ A comprehensive full-stack web application for book management, publishing, and 
    # App opens at http://localhost:3000
    ```
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 Cool-Reads/
@@ -276,45 +276,45 @@ Cool-Reads/
 └── README.md
 ```
 
-## 🔐 User Roles & Permissions
+## User Roles & Permissions
 
-### 👨‍💼 Admin
+### Admin
 
 | Feature      | Create | Read | Update | Delete |
 | ------------ | ------ | ---- | ------ | ------ |
-| Books        | ✅     | ✅   | ✅     | ✅     |
-| Users        | ✅     | ✅   | ✅     | ✅     |
-| Blogs        | ✅     | ✅   | ✅     | ✅     |
-| Requests     | ❌     | ✅   | ✅     | ✅     |
-| Help Requests| ❌     | ✅   | ✅     | ✅     |
+| Books        | Yes     | Yes   | Yes     | Yes     |
+| Users        | Yes     | Yes   | Yes     | Yes     |
+| Blogs        | Yes     | Yes   | Yes     | Yes     |
+| Requests     | No     | Yes   | Yes     | Yes     |
+| Help Requests| No     | Yes   | Yes     | Yes     |
 
-### ✍️ Author
+### Author
 
 | Feature   | Create | Read | Update | Delete |
 | --------- | ------ | ---- | ------ | ------ |
-| Own Books | ✅     | ✅   | ✅     | ✅     |
-| All Books | ❌     | ✅   | ❌     | ❌     |
-| Own Blogs | ✅     | ✅   | ✅     | ✅     |
-| Requests  | ✅     | ✅   | ❌     | ❌     |
-| Comments  | ✅     | ✅   | ✅     | ✅     |
+| Own Books | Yes     | Yes   | Yes     | Yes     |
+| All Books | No     | Yes   | No     | No     |
+| Own Blogs | Yes     | Yes   | Yes     | Yes     |
+| Requests  | Yes     | Yes   | No     | No     |
+| Comments  | Yes     | Yes   | Yes     | Yes     |
 
-### 👀 Viewer
+### Viewer
 
 | Feature      | Create | Read | Update | Delete |
 | ------------ | ------ | ---- | ------ | ------ |
-| Books        | ❌     | ✅   | ❌     | ❌     |
-| Blogs        | ❌     | ✅   | ❌     | ❌     |
-| Comments     | ✅     | ✅   | ✅     | ✅     |
-| Help Tickets | ✅     | ✅   | ❌     | ❌     |
+| Books        | No     | Yes   | No     | No     |
+| Blogs        | No     | Yes   | No     | No     |
+| Comments     | Yes     | Yes   | Yes     | Yes     |
+| Help Tickets | Yes     | Yes   | No     | No     |
 
-### 🕵️ Anonymous User
+### Anonymous User
 
-- ✅ Browse public books
-- ✅ Read blogs
-- ✅ Submit help requests
-- ❌ Leave comments (requires login)
+- Browse public books (Allowed)
+- View blogs (Allowed)
+- Submit help requests (Allowed)
+- Leave comments (requires login)
 
-## 🛠️ Technology Stack
+## Technology Stack
 
 ### Frontend
 
@@ -339,7 +339,7 @@ Cool-Reads/
 - **multer** - File upload handling
 - **multer-gridfs-storage** - GridFS storage for large files
 
-## 📊 Database Schema
+## Database Schema
 
 ### User Model
 
@@ -438,7 +438,7 @@ Cool-Reads/
 }
 ```
 
-## 🔄 Key Workflows
+## Key Workflows
 
 ### Book Publication Flow
 
@@ -478,7 +478,7 @@ Status: Resolved/Closed
 User Notified
 ```
 
-## 🎨 UI Components
+## UI Components
 
 ### Dashboard Examples
 
@@ -503,7 +503,7 @@ User Notified
 - Recently added books
 - Trending blogs
 
-## 🔒 Security Features
+## Security Features
 
 - **Password Hashing**: bcrypt with salt rounds
 - **JWT Authentication**: Secure token-based auth
@@ -575,7 +575,7 @@ PUT    /api/comments/:id       - Update comment
 DELETE /api/comments/:id       - Delete comment
 ```
 
-## 📈 Future Enhancements
+## Future Enhancements
 
 - [ ] **Real-time Notifications**: WebSocket integration for instant updates
 - [ ] **Advanced Search**: Full-text search with filters and sorting
@@ -590,7 +590,7 @@ DELETE /api/comments/:id       - Delete comment
 - [ ] **Dark Mode**: Theme customization
 - [ ] **Email Notifications**: Automated email alerts
 
-## 🐛 Troubleshooting
+## Troubleshooting
 
 ### Common Issues
 
@@ -625,7 +625,7 @@ kill -9 <PID>
 - Add frontend URL to CORS whitelist in backend
 - Check `Access-Control-Allow-Origin` headers
 
-## 🤝 Contributing
+## Contributing
 
 Contributions are welcome! Please follow these steps:
 
@@ -642,29 +642,30 @@ Contributions are welcome! Please follow these steps:
 - Add comments for complex logic
 - Update documentation for new features
 
-## 📝 License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 👥 Authors
+## Authors
 
 - **Nihaar** - [Nihaar75858](https://github.com/Nihaar75858)
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - Create React App for the React boilerplate
 - MongoDB documentation for database guidance
 - Tailwind CSS for the beautiful styling framework
 - The open-source community for inspiration
 
-## 📞 Contact & Support
+## Contact & Support
 
 - **GitHub Issues**: [Report a bug](https://github.com/Nihaar75858/Cool-Reads/issues)
 - **Email**: nihaargade@gmail.com
 - **Project Link**: [https://github.com/Nihaar75858/Cool-Reads](https://github.com/Nihaar75858/Cool-Reads)
+- **Project Deployment Link**: (https://cool-reads.vercel.app/)
 
 ---
 
-**Built with ❤️ using React, Node.js, and MongoDB**
+**Built with using React, Node.js, and MongoDB**
 
 _A place to Create, Share, and Socialize around books!_
