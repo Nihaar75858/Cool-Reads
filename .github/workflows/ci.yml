@@ -20,8 +20,8 @@ jobs:
 
     - name: Install Dependencies (Frontend + Backend)
       run: |
-        cd frontend && npm install
-        cd ../backend && npm install
+        cd frontend && npm install --legacy-peer-deps
+        cd ../backend && npm install --legacy-peer-deps
 
     - name: Run Tests
       run: |
