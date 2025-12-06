@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { GiHamburgerMenu } from "react-icons/gi";
 import { FaSignOutAlt } from "react-icons/fa";
@@ -11,7 +11,6 @@ import { useUser } from '../Context/UserContext';
 const Navbar = () => {
   const { user, userType } = useUser();
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [userRole, setUserType] = useState("");
   const navigate = useNavigate();
 
   const roleMap = {
