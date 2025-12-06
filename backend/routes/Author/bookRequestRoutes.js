@@ -3,21 +3,10 @@ const router = express.Router();
 const multer = require('multer');
 const BookRequest = require('../../models/BookRequest');
 const Notification = require('../../models/Notification');
-
-// Configure multer with memory storage
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'uploads/'); // ensure this folder exists
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + '-' + file.originalname);
-  }
-});
-
-const upload = multer({ storage });
+const multerUpload = require('../../middleware/upload')
 
 // Allow 'bookDocument' and 'bookCover' file fields
-const cpUpload = upload.fields([
+const cpUpload = multerUpload.fields([
   { name: 'bookDocument', maxCount: 1 },
   { name: 'bookCover', maxCount: 1 }
 ]);
