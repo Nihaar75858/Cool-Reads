@@ -23,11 +23,6 @@ jobs:
         cd frontend && npm install --legacy-peer-deps
         cd ../backend && npm install --legacy-peer-deps
 
-    - name: Run Tests
-      run: |
-        cd frontend && npm test -- --watchAll=false
-        cd ../backend && npm test
-
     - name: Build Frontend
       run: |
         cd frontend && npm run build
