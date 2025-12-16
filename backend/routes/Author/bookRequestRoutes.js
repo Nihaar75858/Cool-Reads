@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const multer = require('multer');
 const BookRequest = require('../../models/BookRequest');
 const Notification = require('../../models/Notification');
-const multerUpload = require('../../middleware/upload')
+const multerUpload = require('../../middleware/upload');
+const { authenticate, authorizeRoles } = require('../../middleware/auth');
 
 // Allow 'bookDocument' and 'bookCover' file fields
 const cpUpload = multerUpload.fields([
@@ -11,7 +11,8 @@ const cpUpload = multerUpload.fields([
   { name: 'bookCover', maxCount: 1 }
 ]);
 
-router.post('/request', cpUpload, async (req, res) => {
+// Send book to Admin
+router.post('/request', authenticate, authorizeRoles("Author"), cpUpload, async (req, res) => {
   try {
     const { authorId, title, pages, isbn, dateAdded, abstract, genres } = req.body;
     const authorNames = req.body.authorNames instanceof Array
@@ -60,7 +61,8 @@ router.post('/request', cpUpload, async (req, res) => {
   }
 });
 
-router.get('/author/:id', async (req, res) => {
+// Find accepted books based on Author Id
+router.get('/author/:id', authenticate, async (req, res) => {
   try {
     const requests = await BookRequest.find({ status: 'accepted' });
     res.json(requests);
@@ -69,7 +71,8 @@ router.get('/author/:id', async (req, res) => {
   }
 });
 
-router.get('/author/notifs/:id', async (req, res) => {
+// Notify the Author by Id
+router.get('/author/notifs/:id', authenticate, authorizeRoles("Admin"), async (req, res) => {
   try {
     const authorId = req.params.id;
 

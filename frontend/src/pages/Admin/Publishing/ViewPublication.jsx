@@ -1,15 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { Link } from 'react-router-dom';
-import { API_BASE } from '../../../components/Config/config';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
+import { API_BASE } from "../../../components/Config/config";
 
 const ViewPublication = () => {
   const [requests, setRequests] = useState([]);
 
   useEffect(() => {
-    axios.get(`${API_BASE}/api/admin/request`)
-      .then(res => setRequests(res.data))
-      .catch(err => console.error(err));
+    axios
+      .get(`${API_BASE}/api/admin/request`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
+      .then((res) => setRequests(res.data))
+      .catch((err) => console.error(err));
   }, []);
 
   return (
@@ -21,10 +26,20 @@ const ViewPublication = () => {
         <ul className="space-y-4">
           {requests.map((req) => (
             <li key={req._id}>
-              <Link to={`/admin/requests/${req._id}`} className="block bg-logobg p-4 rounded shadow text-white hover:bg-opacity-80">
-                <p><strong>Title:</strong> {req.title}</p>
-                <p><strong>Author(s):</strong> {req.authorNames}</p>
-                <p><strong>Status:</strong> <span className="capitalize">{req.status}</span></p>
+              <Link
+                to={`/admin/requests/${req._id}`}
+                className="block bg-logobg p-4 rounded shadow text-white hover:bg-opacity-80"
+              >
+                <p>
+                  <strong>Title:</strong> {req.title}
+                </p>
+                <p>
+                  <strong>Author(s):</strong> {req.authorNames}
+                </p>
+                <p>
+                  <strong>Status:</strong>{" "}
+                  <span className="capitalize">{req.status}</span>
+                </p>
               </Link>
             </li>
           ))}

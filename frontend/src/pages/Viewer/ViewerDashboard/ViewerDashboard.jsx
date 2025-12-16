@@ -19,7 +19,11 @@ const ViewerDashboard = () => {
 
   const fetchBooks = async () => {
     try {
-      const res = await fetch(`${API_BASE}/api/books`);
+      const res = await fetch(`${API_BASE}/api/books`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
       const data = await res.json();
 
       // Only show accepted books
@@ -34,7 +38,11 @@ const ViewerDashboard = () => {
 
   const fetchNotifications = async (userId) => {
     try {
-      const res = await fetch(`${API_BASE}/api/blogs/notifications/${userId}`);
+      const res = await fetch(`${API_BASE}/api/blogs/notifications/${userId}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
       const data = await res.json();
       setNotifications(data);
     } catch (err) {

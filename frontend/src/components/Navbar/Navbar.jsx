@@ -1,29 +1,30 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { FaSignOutAlt } from "react-icons/fa";
-import { useNavigate } from 'react-router-dom';
-import { getNavigationConfig } from '../constants/utils'; // Adjust the path
+import { useNavigate } from "react-router-dom";
+import { getNavigationConfig } from "../constants/utils"; // Adjust the path
 import { CgProfile } from "react-icons/cg";
-import { IoSettings } from "react-icons/io5";
-import { useUser } from '../Context/UserContext';
+import { useUser } from "../Context/AuthContext";
+import { useProfile } from "../Context/ProfileContext";
 
 const Navbar = () => {
-  const { user, userType } = useUser();
+  const { user } = useUser();
+  const { profile } = useProfile();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const navigate = useNavigate();
 
   const roleMap = {
-    "Admin": 1,
-    "Author": 2,
-    "Viewer": 3,
-    "Guest": 0
+    Admin: 1,
+    Author: 2,
+    Viewer: 3,
+    Guest: 0,
   };
 
-  const navLinks = getNavigationConfig(roleMap[userType] ?? 0);
+  const navLinks = getNavigationConfig(roleMap[user?.role] ?? 0);
 
   const handleSignOut = () => {
-    localStorage.removeItem("user");
+    localStorage.removeItem("token");
     navigate("/login");
   };
 
@@ -63,7 +64,10 @@ const Navbar = () => {
               </div>
             ))}
 
-            <button onClick={() => setSidebarOpen(!sidebarOpen)} className="focus:outline-none">
+            <button
+              onClick={() => setSidebarOpen(!sidebarOpen)}
+              className="focus:outline-none"
+            >
               <GiHamburgerMenu size={24} />
             </button>
           </div>
@@ -72,19 +76,22 @@ const Navbar = () => {
 
       {/* Sidebar */}
       <div
-        className={`fixed top-0 right-0 h-full w-72 bg-white shadow-lg z-50 transform transition-transform duration-300 ${sidebarOpen ? 'translate-x-0' : 'translate-x-full'
-          }`}
+        className={`fixed top-0 right-0 h-full w-72 bg-white shadow-lg z-50 transform transition-transform duration-300 ${
+          sidebarOpen ? "translate-x-0" : "translate-x-full"
+        }`}
       >
         <div className="p-6 flex flex-col h-full">
           <div className="flex items-center justify-between mb-6 border-b pb-4">
-            {user ? (
+            {profile ? (
               <>
                 <div>
-                  <h2 className="text-lg font-semibold text-gray-800">{user.firstName}</h2>
-                  <p className="text-sm text-gray-500">{user.email}</p>
+                  <h2 className="text-lg font-semibold text-gray-800">
+                    {profile?.firstName}
+                  </h2>
+                  <p className="text-sm text-gray-500">{profile?.email}</p>
                 </div>
                 <img
-                  src={user.profilePic || "/default-profile.png"}
+                  src={profile?.profilePic || "/default-profile.png"}
                   alt="Profile"
                   className="w-12 h-12 rounded-full object-cover border border-gray-300"
                 />
@@ -99,7 +106,10 @@ const Navbar = () => {
             {user ? (
               <>
                 <li>
-                  <Link to="/profile" className="flex items-center gap-2 px-4 py-2 text-gray-800 rounded-md hover:bg-gray-300 transition">
+                  <Link
+                    to="/profile"
+                    className="flex items-center gap-2 px-4 py-2 text-gray-800 rounded-md hover:bg-gray-300 transition"
+                  >
                     <CgProfile /> Profile
                   </Link>
                 </li>
@@ -107,22 +117,23 @@ const Navbar = () => {
             ) : (
               <>
                 <li>
-                  <Link to="/login" className="flex items-center gap-2 px-4 py-2 text-gray-800 rounded-md hover:bg-gray-300 transition">
+                  <Link
+                    to="/login"
+                    className="flex items-center gap-2 px-4 py-2 text-gray-800 rounded-md hover:bg-gray-300 transition"
+                  >
                     <CgProfile /> Login
                   </Link>
                 </li>
                 <li>
-                  <Link to="/register" className="flex items-center gap-2 px-4 py-2 text-gray-800 rounded-md hover:bg-gray-300 transition">
+                  <Link
+                    to="/register"
+                    className="flex items-center gap-2 px-4 py-2 text-gray-800 rounded-md hover:bg-gray-300 transition"
+                  >
                     <CgProfile /> Register
                   </Link>
                 </li>
               </>
             )}
-            <li>
-              <Link to="/helpcenter" className="flex items-center gap-2 px-4 py-2 text-gray-800 rounded-md hover:bg-gray-300 transition">
-                <IoSettings /> Help Center
-              </Link>
-            </li>
           </ul>
 
           {/* Sign Out for logged-in users only */}
@@ -137,7 +148,6 @@ const Navbar = () => {
             </div>
           )}
         </div>
-
       </div>
 
       {/* Overlay */}

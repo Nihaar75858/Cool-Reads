@@ -556,15 +556,6 @@ PUT    /api/requests/:id       - Update request status (Admin)
 DELETE /api/requests/:id       - Delete request (Admin)
 ```
 
-### Help Center
-
-```
-GET    /api/help               - Get all tickets (Admin)
-GET    /api/help/:id           - Get ticket by ID
-POST   /api/help               - Create help ticket
-PUT    /api/help/:id           - Respond to ticket (Admin)
-DELETE /api/help/:id           - Delete ticket (Admin)
-```
 
 ### Comments
 

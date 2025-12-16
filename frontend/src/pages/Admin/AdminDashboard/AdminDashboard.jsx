@@ -15,29 +15,29 @@ const AdminDashboard = () => {
 
   const fetchCounts = async () => {
     try {
+      const token = localStorage.getItem('token');
+
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+
       const [usersRes, booksRes, blogsRes, notifications] = await Promise.all([
-        axios.get(`${API_BASE}/api/admin/users`),
-        axios.get(`${API_BASE}/api/admin/bookcount`),
-        axios.get(`${API_BASE}/api/admin/blogcount`),
-        axios.get(`${API_BASE}/api/admin/notifs`)
+        axios.get(`${API_BASE}/api/admin/users`, config),
+        axios.get(`${API_BASE}/api/admin/bookcount`, config),
+        axios.get(`${API_BASE}/api/admin/blogcount`, config),
+        axios.get(`${API_BASE}/api/admin/notifs`, config)
       ]);
 
-      // Log responses for debugging
-      console.log("Users:", usersRes.data);
-      console.log("Books:", booksRes.data);
-      console.log("Blogs:", blogsRes.data);
-      console.log("Notifications:", notifications.data);
-
-      setUserCount(usersRes.data.count);         // ✅ Use .count for users
-      setBookCount(booksRes.data.count);        // ❗ Still using .length if books returns array
-      setBlogCount(blogsRes.data.count);        // ❗ Still using .length if blogs returns array
+      setUserCount(usersRes.data.count);
+      setBookCount(booksRes.data.count);
+      setBlogCount(blogsRes.data.count);
       setNotifs(notifications.data);
     } catch (err) {
       console.error("Failed to fetch dashboard counts:", err);
     }
   };
-
-  console.log("Users:", userCount);
 
   return (
     <div className="left-0 z-45 w-full">

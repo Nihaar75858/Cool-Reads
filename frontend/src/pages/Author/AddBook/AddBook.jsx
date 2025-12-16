@@ -1,37 +1,37 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import Select from 'react-select'
-import { useUser } from '../../../components/Context/UserContext';
-import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
-import genresList from '../../../components/Genres/Genres';
-import { API_BASE } from '../../../components/Config/config';
+import React, { useState } from "react";
+import axios from "axios";
+import Select from "react-select";
+import { useUser } from "../../../components/Context/AuthContext";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import genresList from "../../../components/Genres/Genres";
+import { API_BASE } from "../../../components/Config/config";
 
 const AddBook = () => {
-  const [bookName, setBookName] = useState('');
-  const [authorNames, setAuthorNames] = useState(['']);
-  const [pages, setPages] = useState('');
-  const [isbn, setIsbn] = useState('');
-  const [dateAdded, setDateAdded] = useState('');
-  const [abstract, setAbstract] = useState('');
+  const [bookName, setBookName] = useState("");
+  const [authorNames, setAuthorNames] = useState([""]);
+  const [pages, setPages] = useState("");
+  const [isbn, setIsbn] = useState("");
+  const [dateAdded, setDateAdded] = useState("");
+  const [abstract, setAbstract] = useState("");
   const [bookFile, setBookFile] = useState(null);
   const [coverImage, setCoverImage] = useState(null);
-  const [error, setError] = useState('');
-  const [message, setMessage] = useState('');
+  const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
   const [selectedGenres, setSelectedGenres] = useState([]);
-  const [authorId, setAuthorId] = useState('');
+  const [authorId, setAuthorId] = useState("");
   const navigate = useNavigate();
 
   const { user } = useUser();
 
   useEffect(() => {
-    if (user) { 
-      setAuthorId(user.id); // Set authorId from user context  
+    if (user) {
+      setAuthorId(user.id);
       console.log("Author ID:", user.id);
     } else {
-      console.error("User not found in context"); 
+      console.error("User not found in context");
     }
-  }, [user]); // Run effect when user changes
+  }, [user]);
 
   const handleAuthorChange = (index, value) => {
     const updatedAuthors = [...authorNames];
@@ -40,7 +40,7 @@ const AddBook = () => {
   };
 
   const addAuthorField = () => {
-    setAuthorNames([...authorNames, '']);
+    setAuthorNames([...authorNames, ""]);
   };
 
   const handleBookUpload = async (e) => {
@@ -52,54 +52,55 @@ const AddBook = () => {
     }
 
     if (!bookFile || !coverImage) {
-      setError('Please upload both the book file and cover image.');
+      setError("Please upload both the book file and cover image.");
       return;
     }
 
-    if (authorNames.length === 0 || authorNames.some(name => !name.trim())) {
-      setError('Author names cannot be empty');
+    if (authorNames.length === 0 || authorNames.some((name) => !name.trim())) {
+      setError("Author names cannot be empty");
       return;
     }
 
     if (selectedGenres.length === 0) {
-      setError('Please select at least one genre.');
+      setError("Please select at least one genre.");
       return;
     }
 
     const formData = new FormData();
-    formData.append('authorId', authorId);
-    formData.append('title', bookName);
-    formData.append('pages', pages);
-    formData.append('isbn', isbn);
-    formData.append('dateAdded', dateAdded);
-    formData.append('abstract', abstract);
-    formData.append('bookDocument', bookFile);
-    formData.append('bookCover', coverImage);
-    authorNames.forEach(name => formData.append('authorNames', name));
-    selectedGenres.forEach(genre => formData.append('genres', genre.value));
+    formData.append("authorId", authorId);
+    formData.append("title", bookName);
+    formData.append("pages", pages);
+    formData.append("isbn", isbn);
+    formData.append("dateAdded", dateAdded);
+    formData.append("abstract", abstract);
+    formData.append("bookDocument", bookFile);
+    formData.append("bookCover", coverImage);
+    authorNames.forEach((name) => formData.append("authorNames", name));
+    selectedGenres.forEach((genre) => formData.append("genres", genre.value));
 
     console.log("FormData ready to send");
 
     try {
       const res = await axios.post(`${API_BASE}/api/books/request`, formData, {
         headers: {
-          'Content-Type': 'multipart/form-data',
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
 
       if (res.data.success) {
-        alert('Book added successfully!');
+        alert("Book added successfully!");
         console.log("Book request submitted successfully:", res.data);
-        navigate('/author/authordashboard');
+        navigate("/author/authordashboard");
+        setMessage("Book added successfully!");
       } else {
-        setError(res.data.message || 'Upload failed');
+        setError(res.data.message || "Upload failed");
       }
     } catch (err) {
       console.error(err.response?.data || err.message);
-      setError('An error occurred while uploading the book.');
+      setError("An error occurred while uploading the book.");
     }
   };
-
 
   return (
     <div className="min-h-screen bg-custombg flex items-center justify-center p-6">
@@ -188,7 +189,7 @@ const AddBook = () => {
           />
         </div>
 
-        {/* ✅ Fancy genres multi-select */}
+        {/* Fancy genres multi-select */}
         <div>
           <label className="block mb-1">Select Genres</label>
           <Select
@@ -201,7 +202,9 @@ const AddBook = () => {
         </div>
 
         <div>
-          <label className="block text-gray-700 mb-1">Book File (PDF/DOCX)</label>
+          <label className="block text-gray-700 mb-1">
+            Book File (PDF/DOCX)
+          </label>
           <input
             type="file"
             accept=".pdf,.doc,.docx"
@@ -231,7 +234,7 @@ const AddBook = () => {
           </button>
           <button
             type="button"
-            onClick={() => navigate('/authordashboard')}
+            onClick={() => navigate("/authordashboard")}
             className="flex-1 bg-red-600 text-white py-2 rounded hover:bg-red-800 transition"
           >
             Cancel

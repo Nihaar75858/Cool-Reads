@@ -1,7 +1,5 @@
 import "./App.css";
-import { useState, useEffect } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
-import { useUser } from "./components/Context/UserContext";
 import PublicDashboard from "./pages/Public/PublicDashboard/PublicDashboard";
 import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
@@ -10,7 +8,6 @@ import Profile from "./components/Profile/Profile";
 import About from "./pages/Public/About/About";
 import PubBlogs from "./pages/Public/PubBlog/PubBlogs";
 import PubBooks from "./pages/Public/PubBooks/PubBooks";
-import HelpCenter from "./components/HelpCenter/HelpCenter";
 
 // Blog
 import CreateBlog from "./components/Blog/CreateBlog/CreateBlog";
@@ -23,7 +20,6 @@ import AddBook from "./pages/Author/AddBook/AddBook";
 import AuthorNotifications from "./pages/Author/AuthorNotifications/AuthorNotifications";
 
 // Admin
-import AdminNotification from "./pages/Admin/AdminNotification/AdminNotification";
 import AdminDashboard from "./pages/Admin/AdminDashboard/AdminDashboard";
 import BookRequestDetail from "./pages/Admin/Publishing/BookRequestDetail";
 import ViewPublication from "./pages/Admin/Publishing/ViewPublication";
@@ -36,30 +32,7 @@ import ViewBook from "./pages/Viewer/ViewBooks/ViewBook";
 import ViewNotifications from "./pages/Viewer/ViewNotifications/ViewNotifications";
 
 function App() {
-  const { user } = useUser();
-  const token = localStorage.getItem("token");
-  const [users, setUsers] = useState([]);
   const location = useLocation();
-
-  // Fetch users when component loads
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const API_BASE = process.env.REACT_APP_API_URL;
-        console.log("Backend URL:", API_BASE);
-        const res = await fetch(`${API_BASE}/api/admin/users`);
-        const data = await res.json();
-        console.log("Parsed data from backend:", data);
-        setUsers(data); // save in state
-      } catch (err) {
-        console.error(err.message);
-      }
-    };
-
-    fetchUsers();
-  }, []);
-
-  console.log("Users:", users);
 
   // List of paths where Navbar should NOT appear
   const hideNavbarPaths = ["/login", "/register"];
@@ -67,7 +40,7 @@ function App() {
 
   return (
     <main className="overflow-hidden">
-      {shouldShowNavbar && <Navbar user={user} />}
+      {shouldShowNavbar && <Navbar />}
       <Routes>
         <Route path="/" element={<PublicDashboard />} />
         <Route path="/register" element={<Register />} />
@@ -76,33 +49,25 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/pubbooks" element={<PubBooks />} />
         <Route path="/publicblogs" element={<PubBlogs />} />
-        <Route path="/helpcenter" element={<HelpCenter />} />
         {/* Blogs */}
         <Route path="/createblog" element={<CreateBlog />} />
         <Route path="/viewblogs" element={<ViewBlogs />} />
         <Route path="/blogs/:id" element={<BlogDetail />} />
         {/* Author */}
-        <Route
-          path="/author/authordashboard"
-          element={<AuthorDashboard user={user} />}
-        />
+        <Route path="/author/authordashboard" element={<AuthorDashboard />} />
         <Route path="/author/addbook" element={<AddBook />} />
         <Route path="/author/notifications" element={<AuthorNotifications />} />
         {/* Admin */}
         <Route path="/admin/viewpublications" element={<ViewPublication />} />
         <Route path="/admin/admindashboard" element={<AdminDashboard />} />
         <Route path="/admin/requests/:id" element={<BookRequestDetail />} />
-        <Route path="/admin/notifications" element={<AdminNotification />} />
         <Route
           path="/admin/reviewpublication"
           element={<ReviewPublication />}
         />
         <Route path="/admin/modifybook/:id" element={<ModifyPublications />} />
         {/* Viewer */}
-        <Route
-          path="/viewer/viewerdashboard"
-          element={<ViewerDashboard user={user} />}
-        />
+        <Route path="/viewer/viewerdashboard" element={<ViewerDashboard />} />
         <Route path="/viewer/viewbooks" element={<ViewBook />} />
         <Route
           path="/viewer/viewnotifications"

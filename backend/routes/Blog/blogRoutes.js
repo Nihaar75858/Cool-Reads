@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const Blog = require('../../models/Blog');
+const { authenticate } = require('../../middleware/auth');
 
 // Add a blog
-router.post('/', async (req, res) => {
+router.post('/', authenticate, async (req, res) => {
   try {
     const newBlog = new Blog(req.body);
     await newBlog.save();
@@ -14,7 +15,7 @@ router.post('/', async (req, res) => {
 });
 
 // Get all blogs
-router.get('/', async (req, res) => {
+router.get('/', authenticate, async (req, res) => {
   try {
     const blogs = await Blog.find().sort({ createdAt: -1 });
     res.json(blogs);
@@ -23,7 +24,8 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.get('/:id', async (req, res) => {
+// Open a blog by Id
+router.get('/:id', authenticate, async (req, res) => {
   try {
     const blog = await Blog.findById(req.params.id);
     res.json(blog);
@@ -32,6 +34,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
+// Delete a blog by Id
 router.delete('/:id', async (req, res) => {
   try {
     const deletedBlog = await Blog.findByIdAndDelete(req.params.id);
@@ -42,6 +45,7 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
+// Get Blogs on Public
 router.get('/pubblogs', async (req, res) => {
     try {
         const blogs = await Blog.find().sort({ createdAt: -1 });

@@ -23,11 +23,9 @@ const Login = () => {
       const data = await response.json();
   
       if (data.success) {
-
         alert('Login successful!');
-        localStorage.setItem('userId', data.user._id); 
-        localStorage.setItem('user', JSON.stringify(data.user));
-        navigate('/authordashboard');
+        localStorage.setItem('token', data.token);
+        navigate('/author/authordashboard');
       } else {
         setError(data.message || 'Login failed');
       }

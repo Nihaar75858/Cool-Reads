@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { API_BASE } from '../../../components/Config/config';
+import React, { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { API_BASE } from "../../../components/Config/config";
 
 const BookRequestDetail = () => {
   const { id } = useParams();
@@ -9,22 +9,31 @@ const BookRequestDetail = () => {
   const [book, setBook] = useState(null);
 
   useEffect(() => {
-    axios.get(`${API_BASE}/api/admin/request`)
-      .then(res => {
-        const found = res.data.find(b => b._id === id);
-        if (found) setBook(found);
-        else navigate('/admin/viewpublications'); // redirect if not found
+    axios
+      .get(`${API_BASE}/api/admin/request`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
       })
-      .catch(err => console.error(err));
+      .then((res) => {
+        const found = res.data.find((b) => b._id === id);
+        if (found) setBook(found);
+        else navigate("/admin/viewpublications"); // redirect if not found
+      })
+      .catch((err) => console.error(err));
   }, [id, navigate]);
 
   const handleAccept = async () => {
     try {
-      await axios.put(`${API_BASE}/api/admin/accept/${id}`);
+      await axios.put(`${API_BASE}/api/admin/accept/${id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
       alert("Book accepted successfully");
-      navigate('/admin/viewpublications');
+      navigate("/admin/viewpublications");
     } catch (err) {
-      console.error('Error accepting request:', err);
+      console.error("Error accepting request:", err);
     }
   };
 
@@ -32,10 +41,10 @@ const BookRequestDetail = () => {
 
   return (
     <div className="min-h-screen bg-custombg p-6 text-black justify-center items-center flex flex-col">
-
       <form className="space-y-4 max-w-xl mx-auto w-full p-6">
-
-        <h2 className="text-3xl font-bold mb-4 text-center mx-auto">{book.title}</h2>
+        <h2 className="text-3xl font-bold mb-4 text-center mx-auto">
+          {book.title}
+        </h2>
         {book.bookCover && (
           <div className="my-4 items-center flex justify-center">
             <img
@@ -48,7 +57,7 @@ const BookRequestDetail = () => {
 
         <div>
           <label className="block mb-1 font-bold">Author(s)</label>
-          <p className="text-black mx-20">{book.authorNames.join(', ')}</p>
+          <p className="text-black mx-20">{book.authorNames.join(", ")}</p>
         </div>
 
         <div>
@@ -68,7 +77,7 @@ const BookRequestDetail = () => {
 
         <div>
           <label className="block mb-1 font-bold">Genres</label>
-          <p className="text-black mx-20">{book.genres.join(', ')}</p>
+          <p className="text-black mx-20">{book.genres.join(", ")}</p>
         </div>
 
         {book.bookDocument && (
@@ -84,7 +93,7 @@ const BookRequestDetail = () => {
           </div>
         )}
 
-        {book.status === 'pending' && (
+        {book.status === "pending" && (
           <button
             onClick={handleAccept}
             className="bg-green-600 px-4 py-2 rounded hover:bg-green-700 items-center flex text-white mx-auto justify-center"
@@ -92,7 +101,6 @@ const BookRequestDetail = () => {
             Accept Book
           </button>
         )}
-
       </form>
     </div>
   );

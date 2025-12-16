@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { API_BASE } from '../../../components/Config/config';
+import React, { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { API_BASE } from "../../../components/Config/config";
 
 const ModifyPublications = () => {
   const { id } = useParams();
@@ -9,28 +9,37 @@ const ModifyPublications = () => {
   const [book, setBook] = useState(null);
 
   useEffect(() => {
-    axios.get(`${API_BASE}/api/publications/view`)
-      .then(res => {
-        const found = res.data.find(b => b._id === id);
-        if (found) setBook(found);
-        else navigate('/admin/reviewpublications');
+    axios
+      .get(`${API_BASE}/api/publications/view`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
       })
-      .catch(err => console.error(err));
+      .then((res) => {
+        const found = res.data.find((b) => b._id === id);
+        if (found) setBook(found);
+        else navigate("/admin/reviewpublications");
+      })
+      .catch((err) => console.error(err));
   }, [id, navigate]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setBook(prev => ({ ...prev, [name]: value }));
+    setBook((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`${API_BASE}/api/publications/accept/${id}`, book);
+      await axios.put(`${API_BASE}/api/publications/accept/${id}`, book, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
       alert("Book updated successfully");
-      navigate('/admin/reviewpublication');
+      navigate("/admin/reviewpublication");
     } catch (err) {
-      console.error('Error updating book:', err);
+      console.error("Error updating book:", err);
     }
   };
 
@@ -39,8 +48,10 @@ const ModifyPublications = () => {
   return (
     <div className="min-h-screen bg-custombg py-6 text-black items-center flex flex-col">
       <h2 className="text-3xl font-bold mb-6">Edit Book: {book.title}</h2>
-      <form onSubmit={handleSubmit} className="space-y-4 max-w-xl mx-auto w-full p-6">
-        
+      <form
+        onSubmit={handleSubmit}
+        className="space-y-4 max-w-xl mx-auto w-full p-6"
+      >
         <div>
           <label className="block mb-1">Title</label>
           <input
@@ -114,7 +125,6 @@ const ModifyPublications = () => {
             Save Changes
           </button>
         </div>
-
       </form>
     </div>
   );

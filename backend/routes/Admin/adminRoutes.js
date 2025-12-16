@@ -6,7 +6,6 @@ const Publication = require('../../models/Publication');
 const Blog = require('../../models/Blog'); // Assuming blogs are stored in Blog model
 const { authenticate, authorizeRoles } = require('../../middleware/auth');
 const Notification = require('../../models/Notification');
-const HelpRequest = require('../../models/Help'); // Import HelpRequest model
 
 // Get the count of users
 router.get('/users', async (req, res) => {
@@ -122,51 +121,6 @@ router.put('/accept/:id', async (req, res) => {
       notification,
     });
 
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-router.get('/help', async (req, res) => {
-  try {
-    const helpRequests = await HelpRequest.find().sort({ date: -1 });
-    res.json(helpRequests);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-router.post('/help/reply', async (req, res) => {
-  const { requestId, replyMessage, userId } = req.body;
-  try {
-    const helpRequest = await HelpRequest.findByIdAndUpdate(
-      requestId,
-      { read: true } // or delete it instead: await HelpRequest.findByIdAndDelete()
-    );
-
-    if (!helpRequest) {
-      return res.status(404).json({ error: 'Help request not found' });
-    }
-
-    // Create a reply notification
-    const replyNotification = new Notification({
-      type: 'Help Reply',
-      message: replyMessage,
-      recipientRole: 'Author', // Include user ID if available
-      authorId: userId,
-      read: false,
-      date: new Date(),
-      status: 'Replied',
-    });
-
-    await replyNotification.save();
-
-    // Update the help request with the reply
-    helpRequest.reply = replyMessage;
-    helpRequest.replyDate = new Date();
-    await helpRequest.save();
-
-    res.json({ message: 'Reply sent successfully', notification: replyNotification });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

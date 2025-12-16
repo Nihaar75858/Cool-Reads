@@ -1,3 +1,4 @@
+// Import all libraries
 require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
@@ -6,11 +7,13 @@ const bodyParser = require('body-parser');
 const app = express();
 const port = 5000;
 const cors = require('cors');
+const path = require('path');
+
+// Initialize express and cors
 app.use(express.json());
 app.use(cors());
-const authenticate = require('./middleware/authenticate');
-const authorizeRoles = require('./middleware/authorize');
-const path = require('path');
+
+// Import all custom modules
 const publicationRoutes = require('./routes/Admin/publicationRoutes');
 const validateRoute = require('./routes/Auth/validate');
 const userRoutes = require('./routes/Auth/userRoutes');
@@ -20,7 +23,8 @@ const blogRoutes = require('./routes/Blog/blogRoutes');
 const commentRoutes = require('./routes/Comments/commentRoutes');
 const viewerRoutes = require('./routes/Viewer/viewerRoutes');
 const pubroutes = require('./routes/Public/publicroutes');
-const helpCenterRoutes = require('./routes/Help/helpcenter');
+
+// Create paths
 app.use('/api/comments', commentRoutes);
 app.use('/api/books', bookRequestRoutes);
 app.use('/api/admin', adminRoutes);
@@ -30,7 +34,6 @@ app.use('/api/blogs', blogRoutes);
 app.use('/api/publications', publicationRoutes);
 app.use('/api/viewer', viewerRoutes);
 app.use('/api/public', pubroutes);
-app.use('/api/help', helpCenterRoutes);
 
 // Middleware to parse JSON
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
