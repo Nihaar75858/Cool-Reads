@@ -18,11 +18,17 @@ jobs:
       with:
         node-version: 18
 
-    - name: Install Dependencies (Frontend + Backend)
+    - name: Install Frontend Dependencies
       run: |
-        cd frontend && npm install --legacy-peer-deps
-        cd ../backend && npm install --legacy-peer-deps
+        cd frontend 
+        npm install --legacy-peer-deps
+
+    - name: Install Backend Dependencies
+      run: |
+        cd ../backend
+        npm install --legacy-peer-deps
 
     - name: Build Frontend
       run: |
-        cd frontend && CI=false npm run build
+        cd frontend 
+        CI=false npm run build
