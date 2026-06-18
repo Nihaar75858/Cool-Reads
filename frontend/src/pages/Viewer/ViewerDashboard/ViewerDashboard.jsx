@@ -6,6 +6,8 @@ const ViewerDashboard = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [books, setBooks] = useState([]);
   const [filteredBooks, setFilteredBooks] = useState([]);
+
+  // eslint-disable-next-line no-unused-vars
   const [notifications, setNotifications] = useState([]);
 
   useEffect(() => {
