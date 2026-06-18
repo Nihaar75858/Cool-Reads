@@ -28,7 +28,13 @@ jobs:
         cd backend
         npm install --legacy-peer-deps
 
+    - name: Check frontend node_modules
+      run: |
+        ls -la frontend/node_modules/.bin | grep react-scripts
+
     - name: Build Frontend
       run: |
         cd frontend 
         CI=false npm run build
+
+      
